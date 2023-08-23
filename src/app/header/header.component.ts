@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   dropdownToggle() {
     this.hmburgerButton.nativeElement.classList.toggle('show')
+
   }
 
   ngOnInit(): void {
