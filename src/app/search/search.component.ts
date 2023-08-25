@@ -7,7 +7,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
+  id: number
   ngOnInit(): void {
 
   }
