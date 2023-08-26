@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('hamburger', { static: false }) hmburgerButton: ElementRef<HTMLElement>
 
 
+  constructor(private router: Router) { }
+
   dropdownToggle() {
     this.hmburgerButton.nativeElement.classList.toggle('show')
 
@@ -17,5 +20,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  navigateToSearchList() {
+    this.router.navigate(['/search']);
   }
 }

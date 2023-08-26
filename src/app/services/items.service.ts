@@ -53,4 +53,12 @@ export class ItemsService {
 
 
   constructor() { }
+
+  getItem(id: number) {
+    return this.rows[id];
+  }
+
+  getListOfItem() {
+    return this.rows.slice();
+  }
 }

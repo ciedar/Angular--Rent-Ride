@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ItemsService } from 'src/app/services/items.service';
 @Component({
   selector: 'app-search-list',
@@ -9,11 +10,16 @@ export class SearchListComponent implements OnInit {
 
 
   listOfItems: any[] = []
-  constructor(private itemService: ItemsService) {
+  constructor(private itemService: ItemsService, private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.listOfItems = this.itemService.rows;
   }
+
+
+  // clicked(id: number) {
+  //   this.router.navigate([id]);
+  // }
 }

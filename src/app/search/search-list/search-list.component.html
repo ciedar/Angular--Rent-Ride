@@ -1,5 +1,5 @@
-<a style="cursor: pointer;">
-    <div *ngFor="let item of listOfItems; let i = index" class="d-flex container mt-5 shadow-sm">
+<div *ngFor="let item of listOfItems; let i = index" class="d-flex container mt-5 shadow-sm">
+    <a style="cursor: pointer;" [routerLink]="[i]">
         <div>
             <img [src]="item.img" alt="">
         </div>
@@ -13,5 +13,5 @@
             </div>
             <p class="mt-auto pt-5">22.08.2021</p>
         </div>
-    </div>
-</a>
+    </a>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemsService } from '../services/items.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,7 +8,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  id: number
+  constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
 
   }
