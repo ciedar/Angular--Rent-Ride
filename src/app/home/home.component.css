@@ -1,3 +1,18 @@
-.custom:hover {
-    opacity: 0.5;
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+        /* Przesunięcie o szerokość jednego elementu */
+    }
+}
+
+.slide {
+    transition: transform 2s ease-in-out
+}
+
+.slide.active {
+    animation: slide 4s infinite;
 }
