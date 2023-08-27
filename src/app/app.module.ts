@@ -9,6 +9,9 @@ import { AuthComponent } from './auth/auth.component';
 import { SearchComponent } from './search/search.component';
 import { SearchListComponent } from './search/search-list/search-list.component';
 import { SearchItemComponent } from './search/search-list/search-item/search-item.component';
+import { UserCockpitComponent } from './user-cockpit/user-cockpit.component';
+import { UserPanelComponent } from './user-cockpit/user-panel/user-panel.component';
+import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { SearchItemComponent } from './search/search-list/search-item/search-ite
     AuthComponent,
     SearchComponent,
     SearchListComponent,
-    SearchItemComponent
+    SearchItemComponent,
+    UserCockpitComponent,
+    UserPanelComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
