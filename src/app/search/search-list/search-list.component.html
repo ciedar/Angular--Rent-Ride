@@ -1,17 +1,17 @@
-<div *ngFor="let item of listOfItems; let i = index" class="d-flex container mt-5 shadow-sm">
-    <a style="cursor: pointer;" [routerLink]="[i]">
+<div *ngFor="let item of listOfItems; let i = index" class="container mt-5 shadow-sm">
+    <a [routerLink]="[i]" class="d-flex" style="cursor: pointer;">
         <div>
             <img [src]="item.img" alt="">
         </div>
-        <div class="justify-content-between">
-            <div class="d-flex">
+        <div class="flex-fill d-flex flex-column justify-content-between ms-3">
+            <div>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate amet corporis saepe ipsa
                     doloremque.
                     Minima, Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate amet corporis saepe ipsa
                     doloremque. Minima?</p>
                 <p>4999zl</p>
             </div>
-            <p class="mt-auto pt-5">22.08.2021</p>
+            <p class="mt-auto pt-3">22.08.2021</p>
         </div>
     </a>
 </div>
