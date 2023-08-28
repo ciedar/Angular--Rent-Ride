@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms'
-import { FirebaseService } from '../services/firebase.service';
-import { Subscription, BehaviorSubject } from 'rxjs'
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { AuthResponseData, FirebaseService } from '../services/firebase.service';
+import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
+
 
 
 
@@ -14,35 +16,45 @@ import { User } from '../models/user.model';
 })
 export class AuthComponent implements OnInit {
   registerForm: FormGroup
-  registerSubscription: Subscription;
-  user: User;
-  userEmitter = new BehaviorSubject<User>(null)
-  constructor(private firebase: FirebaseService) {
+  loginMode: boolean = false;
+  error: null
+  user: User
+  constructor(private firebase: FirebaseService, private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      'email': new FormControl(null),
-      'password': new FormControl(null)
+      'email': new FormControl(null, [Validators.email, Validators.required]),
+      'password': new FormControl(null, [Validators.minLength(6), Validators.required])
     })
   }
 
 
   submitForm(data: FormGroup) {
-    const email = data.value.email;
-    const password = data.value.password;
-    this.firebase.registerUserWithEmailAndPassword(email, password)
-      .then((data) => {
-        // this.user = {
-        //   email: data.user.email,
-        //   id: data.user.uid,
-        //   _token: data.user.getIdTokenResult()
-        // }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      })
+    this.firebase.user.subscribe((data: User) => {
+      this.user = data;
+
+    })
+    let obs = new Observable<AuthResponseData>
+
+    if (!this.loginMode) {
+      obs = this.firebase.registerWithEmailAndPassword(data.value.email, data.value.password);
+    } else {
+      obs = this.firebase.loginWithEmailAndPassword(data.value.email, data.value.password);
+    }
+
+    obs.subscribe(data => {
+      console.log(data);
+      this.router.navigate(['/user-panel'])
+    }, error => {
+      this.error = error;
+    })
+
+  }
+
+  switchMode() {
+    this.loginMode = !this.loginMode;
   }
 
 

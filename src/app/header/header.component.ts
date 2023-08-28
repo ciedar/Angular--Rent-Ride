@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +11,9 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   @ViewChild('hamburger', { static: false }) hmburgerButton: ElementRef<HTMLElement>
   isLogged: boolean = false;
+  user: User
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firebase: FirebaseService) { }
 
   dropdownToggle() {
     this.hmburgerButton.nativeElement.classList.toggle('show')
@@ -18,7 +21,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.firebase.user.subscribe((data: User) => {
+      this.user = data;
+      if (data) {
+        this.isLogged = !this.isLogged
+      }
+    })
   }
 
   navigateToSearchList() {

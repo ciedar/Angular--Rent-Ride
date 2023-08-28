@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a href="#" class="navbar-brand">Tablica</a>
+        <a href="#" routerLink="/" class="navbar-brand">Tablica</a>
         <button (click)="dropdownToggle()" class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,13 @@
                 <button class="btn btn-dark" type="button" (click)="navigateToSearchList()">Search</button>
             </form>
             <div class="ml-lg-auto text-center">
-                <button type="button" class="btn btn-outline-primary" routerLink="/auth">Login</button>
-                <button type="button" class="btn btn-outline-success" routerLink="/auth">Register</button>
-                <button type="button" class="btn btn-outline-success" routerLink="/user-panel">Twoje
+                <button *ngIf="!isLogged" type="button" class="btn btn-outline-primary"
+                    routerLink="/auth">Login</button>
+                <button *ngIf="!isLogged" type="button" class="btn btn-outline-success"
+                    routerLink="/auth">Register</button>
+                <button *ngIf="isLogged" type="button" class="btn btn-outline-success" routerLink="/user-panel">Twoje
                     konto</button>
+                <button *ngIf="isLogged" type="button" class="btn btn-outline-danger" routerLink="/">Wyloguj</button>
             </div>
         </div>
     </div>
