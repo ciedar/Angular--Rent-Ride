@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -12,6 +14,7 @@ import { SearchItemComponent } from './search/search-list/search-item/search-ite
 import { UserCockpitComponent } from './user-cockpit/user-cockpit.component';
 import { UserPanelComponent } from './user-cockpit/user-panel/user-panel.component';
 import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -25,11 +28,16 @@ import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
     SearchItemComponent,
     UserCockpitComponent,
     UserPanelComponent,
-    AddPostComponent
+    AddPostComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRouteModule
+    AppRouteModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

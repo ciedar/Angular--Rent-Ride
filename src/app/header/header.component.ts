@@ -7,9 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  num: number;
   @ViewChild('hamburger', { static: false }) hmburgerButton: ElementRef<HTMLElement>
-
+  isLogged: boolean = false;
 
   constructor(private router: Router) { }
 

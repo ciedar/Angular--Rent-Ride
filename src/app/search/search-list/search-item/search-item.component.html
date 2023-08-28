@@ -1,2 +1,14 @@
-<p>{{item.name}}</p>
-<img src="{{item.img}}" alt="">
+<div class="container-fluid">
+    <div class="row">
+        <img [src]="item.img" alt="" class="img img-fluid">
+    </div>
+    <div class="row mx-auto">
+        <p class="fs-5">{{item.name}}</p>
+    </div>
+    <div class="col mx-auto">
+        <p class="fs-5">{{item.price}}</p>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary">Kup</button>
+    </div>
+</div>

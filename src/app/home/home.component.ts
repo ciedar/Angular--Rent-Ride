@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { ItemsService } from '../services/items.service';
 import { OurItemsService } from '../services/our-items.service';
 import { Subscription } from 'rxjs';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ourItems: {}[] = [];
   mainItem: any;
   startId: number = 0;
-  constructor(private itemService: ItemsService, private ourItemsService: OurItemsService) {
+  constructor(private itemService: ItemsService, private ourItemsService: OurItemsService, private firebase: FirebaseService) {
 
   }
 
