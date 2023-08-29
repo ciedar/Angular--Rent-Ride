@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-add-post',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AddPostComponent {
 
+
+  constructor(private databaseService: DatabaseService) {
+
+  }
+  postItem() {
+    this.databaseService.additem().subscribe();
+  }
 }

@@ -20,7 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.firebase.user.subscribe((data: User) => {
       this.user = data;
-      console.log(this.user)
     })
     this.firebase.autoLogin()
   }
