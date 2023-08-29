@@ -17,7 +17,8 @@
                     routerLink="/auth">Register</button>
                 <button *ngIf="isLogged" type="button" class="btn btn-outline-success" routerLink="/user-panel">Twoje
                     konto</button>
-                <button *ngIf="isLogged" type="button" class="btn btn-outline-danger" routerLink="/">Wyloguj</button>
+                <button (click)="logout()" *ngIf="isLogged" type="button"
+                    class="btn btn-outline-danger">Wyloguj</button>
             </div>
         </div>
     </div>

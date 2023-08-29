@@ -32,4 +32,9 @@ export class HeaderComponent implements OnInit {
   navigateToSearchList() {
     this.router.navigate(['/search']);
   }
+  logout() {
+    this.isLogged = !this.isLogged;
+    this.user = null;
+    this.firebase.logout()
+  }
 }
