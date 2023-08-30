@@ -1,8 +1,8 @@
 export class ItemModel {
-    public imgUrl: string
     public name: string
+    public itemDescription: string
+    public imgUrl: string[]
     public price: number
-    public category: string
     public owner: string
 
 }
