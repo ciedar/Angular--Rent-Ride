@@ -41,12 +41,22 @@ export class FirebaseService {
   expTokenTime: any;
   registerLink: string = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.firebaseConfig.apiKey}`
   loginLink: string = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.firebaseConfig.apiKey}`
+  createUserInDatabaseLink: string = 'https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json'
   app = initializeApp(this.firebaseConfig);
   analytics = getAnalytics(this.app);
   user = new BehaviorSubject<User>(null);
   error: string
   constructor(private httpClient: HttpClient, private router: Router) {
 
+  }
+
+  createUserInDatabase(email: string, password: string, username: string) {
+    const userObject: {} = {
+      username: username,
+      email: email,
+      password: password
+    }
+    return this.httpClient.post(this.createUserInDatabaseLink, userObject)
   }
 
   registerWithEmailAndPassword(email: string, password: string) {

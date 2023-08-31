@@ -26,7 +26,8 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       'email': new FormControl(null, [Validators.email, Validators.required]),
-      'password': new FormControl(null, [Validators.minLength(6), Validators.required])
+      'password': new FormControl(null, [Validators.minLength(6), Validators.required]),
+      'username': new FormControl(null, Validators.required)
     })
   }
 
@@ -40,6 +41,7 @@ export class AuthComponent implements OnInit {
 
     if (!this.loginMode) {
       obs = this.firebase.registerWithEmailAndPassword(data.value.email, data.value.password);
+
     } else {
       obs = this.firebase.loginWithEmailAndPassword(data.value.email, data.value.password);
     }
@@ -49,6 +51,7 @@ export class AuthComponent implements OnInit {
     }, error => {
       this.error = error;
     })
+    this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
 
   }
 
