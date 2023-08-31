@@ -17,4 +17,6 @@ export class DatabaseService {
     return this.httpClient.post<ItemModel>(this.postItemByUserFirebaseLink, user);
   }
 
+  fetchUserItems
+
 }

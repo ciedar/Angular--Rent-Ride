@@ -15,6 +15,7 @@ import { UserCockpitComponent } from './user-cockpit/user-cockpit.component';
 import { UserPanelComponent } from './user-cockpit/user-panel/user-panel.component';
 import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
 import { FooterComponent } from './footer/footer.component';
+import { ShowUserItemsComponent } from './user-cockpit/show-user-items/show-user-items.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { FooterComponent } from './footer/footer.component';
     UserCockpitComponent,
     UserPanelComponent,
     AddPostComponent,
-    FooterComponent
+    FooterComponent,
+    ShowUserItemsComponent
   ],
   imports: [
     BrowserModule,
