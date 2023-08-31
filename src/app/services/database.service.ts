@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { User } from '../models/user.model';
+// import { User } from '../models/user.model';
 import { ItemModel } from '../models/items.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +13,8 @@ export class DatabaseService {
 
   }
 
-  additem(user: User) {
-    return this.httpClient.put<User>(this.postItemByUserFirebaseLink, user);
+  additem(user: ItemModel) {
+    return this.httpClient.post<ItemModel>(this.postItemByUserFirebaseLink, user);
   }
 
 }

@@ -5,4 +5,11 @@ export class ItemModel {
     public price: number
     public owner: string
 
+    constructor(name: string, itemDescription: string, imgUrl: string[], price: number, owner: string) {
+        this.name = name;
+        this.itemDescription = itemDescription;
+        this.imgUrl = imgUrl,
+            this.price = price,
+            this.owner = owner;
+    }
 }

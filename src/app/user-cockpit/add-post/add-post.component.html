@@ -1,5 +1,5 @@
 <div class="container-fluid pt-5">
-    <form class="col-6" [formGroup]="addItemPost" (ngSubmit)="postItem()">
+    <form class="col-6" [formGroup]="addItemPost" (ngSubmit)="postItem(addItemPost)">
         <div class="mb-3">
             <label for="itemName">Nazwa</label>
             <input type="text" id="itemName" class="form-control" placeholder="Name" formControlName="name">
@@ -17,11 +17,11 @@
                     <input type="text" id="imgUrl" class="form-control mt-2" placeholder="img" formControlName="img">
                 </div>
                 <div class="col-md-2 d-flex align-items-center mt-2">
-                    <button class="btn btn-danger" (click)="onRemoveImgUrlInput(i)">X</button>
+                    <button class="btn btn-danger" type="button" (click)="onRemoveImgUrlInput(i)">X</button>
                 </div>
             </div>
             <div class="col-md-2 d-flex align-items-center mt-2">
-                <button class="btn btn-outline-success" (click)="onAddImgUrlInput()">Dodaj</button>
+                <button class="btn btn-outline-success" type="button" (click)="onAddImgUrlInput()">Dodaj</button>
             </div>
         </div>
         <div class="mb-3 form-group">
@@ -31,7 +31,7 @@
 
         <div class="d-grid gap-2">
             <button type="button" class="btn btn-outline-danger">Clear</button>
-            <button (click)="postItem()" type="button" class="btn btn-outline-success">Confirm</button>
+            <button type="submit" class="btn btn-outline-success">Confirm</button>
         </div>
     </form>
 </div>
