@@ -39,7 +39,7 @@ export class AddPostComponent implements OnInit {
       data.value.price,
       this.user.email);
 
-    this.databaseService.additem(this.itemModel).subscribe();
+    this.databaseService.additem(this.itemModel);
 
     for (let i = 0; i <= (<FormArray>this.addItemPost.get('imgUrl')).controls.length; i++) {
       (<FormArray>this.addItemPost.get('imgUrl')).removeAt(i);

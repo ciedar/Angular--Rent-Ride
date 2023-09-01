@@ -10,15 +10,23 @@ import { DatabaseService } from 'src/app/services/database.service';
 })
 export class ShowUserItemsComponent {
 
-  userItems: [];
+  userItems: any;
   subscription: Subscription;
   constructor(private database: DatabaseService) { }
 
+  // getUserItems() {
+  //   this.subscription = this.database.sendUserItems.subscribe((data) => {
+  //     this.userItems = data;
+  //     this.database.getUserItems()
+
+  //   })
+  // }
+
   getUserItems() {
-    this.database.getUserItems()
-    this.subscription = this.database.sendUserItems.subscribe((data) => {
+    this.database.getUserItems().subscribe((data) => {
+      console.log(data);
       this.userItems = data;
-      console.log(this.userItems)
+      console.log(this.userItems);
     })
   }
 }
