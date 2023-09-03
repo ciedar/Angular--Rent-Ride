@@ -36,6 +36,7 @@ export class DatabaseService {
       .pipe(
         map(responseData => {
           const arr = Object.values(responseData);
+          return arr;
           // return { ...responseData, img: responseData.imgUrl ? responseData.imgUrl : [] }
           return [{ ...arr[0], img: arr[0].imgUrl ? arr[0].imgUrl : [] }]
           const itemArr = [];

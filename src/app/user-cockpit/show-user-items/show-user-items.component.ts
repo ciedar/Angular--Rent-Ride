@@ -12,6 +12,7 @@ export class ShowUserItemsComponent implements OnInit {
 
   userItems: any;
   userImgUrl: string[] = []
+  ak = []
   id: string
   constructor(private database: DatabaseService) { }
 
@@ -25,7 +26,9 @@ export class ShowUserItemsComponent implements OnInit {
     this.database.getUserItems(this.id).subscribe(data => {
       this.userItems = data;
       console.log(this.userItems)
-      console.log(this.userItems[0].imgUrl)
+      // this.ak = this.userItems[0]
+      // console.log(this.ak)
+      // console.log(this.userItems[0].img)
       // this.userItems = [{
       //   info: data,
       //   img: data[0].imgUrl
