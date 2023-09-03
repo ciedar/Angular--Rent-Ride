@@ -45,6 +45,7 @@ export class AuthComponent implements OnInit {
 
     if (!this.loginMode) {
       obs = this.firebase.registerWithEmailAndPassword(data.value.email, data.value.password);
+      this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
 
     } else {
       obs = this.firebase.loginWithEmailAndPassword(data.value.email, data.value.password);
@@ -55,7 +56,6 @@ export class AuthComponent implements OnInit {
     }, error => {
       this.error = error;
     })
-    this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
 
   }
 
