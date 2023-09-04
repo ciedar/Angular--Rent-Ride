@@ -32,7 +32,7 @@ const appRoutes: Routes = [
             {
                 path: 'user-items-panel', component: UserItemsPanelComponent, children: [
                     { path: '', component: ShowUserItemsComponent },
-                    { path: 'edit', component: EditComponent }
+                    { path: 'edit/:index', component: EditComponent }
                 ]
             }
         ]

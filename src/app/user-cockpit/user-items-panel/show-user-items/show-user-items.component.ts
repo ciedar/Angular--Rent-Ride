@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ItemModel } from 'src/app/models/items.model';
 import { DatabaseService } from 'src/app/services/database.service';
 
@@ -14,7 +15,8 @@ export class ShowUserItemsComponent implements OnInit {
   userImgUrl: string[] = []
   ak = []
   id: string
-  constructor(private database: DatabaseService) { }
+  editItemEvent = new BehaviorSubject<any>(null);
+  constructor(private database: DatabaseService, private router: Router, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -29,5 +31,10 @@ export class ShowUserItemsComponent implements OnInit {
         this.userItems = data;
         console.log(this.userItems)
       })
+  }
+
+  editItem(index: number) {
+    this.router.navigate(['edit', index], { relativeTo: this.route });
+    this.editItemEvent.next(index);
   }
 }
