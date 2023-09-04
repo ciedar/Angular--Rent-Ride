@@ -16,6 +16,7 @@ import { UserPanelComponent } from './user-cockpit/user-panel/user-panel.compone
 import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShowUserItemsComponent } from './user-cockpit/show-user-items/show-user-items.component';
+import { EditPasswordComponent } from './user-cockpit/edit-password/edit-password.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ShowUserItemsComponent } from './user-cockpit/show-user-items/show-user
     UserPanelComponent,
     AddPostComponent,
     FooterComponent,
-    ShowUserItemsComponent
+    ShowUserItemsComponent,
+    EditPasswordComponent
   ],
   imports: [
     BrowserModule,
