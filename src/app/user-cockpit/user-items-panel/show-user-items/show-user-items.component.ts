@@ -29,7 +29,6 @@ export class ShowUserItemsComponent implements OnInit {
     this.database.getUserItems(this.id)
       .subscribe(data => {
         this.userItems = data;
-        console.log(this.userItems)
       })
   }
 

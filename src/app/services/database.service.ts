@@ -40,6 +40,17 @@ export class DatabaseService {
       )
   }
 
+  getItem(userId: string) {
+    return this.httpClient.get<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`)
+      .pipe(
+        map(responseData => {
+          console.log(responseData)
+          const arr = Object.values(responseData);
+          return arr;
+        })
+      )
+  }
+
 
 
 
