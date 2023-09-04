@@ -18,8 +18,4 @@ export class SearchListComponent implements OnInit {
     this.listOfItems = this.itemService.rows;
   }
 
-
-  // clicked(id: number) {
-  //   this.router.navigate([id]);
-  // }
 }

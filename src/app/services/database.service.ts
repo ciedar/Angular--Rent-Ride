@@ -4,7 +4,7 @@ import { FirebaseService } from './firebase.service';
 import { ItemModel } from '../models/items.model';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { BehaviorSubject, Observable, catchError, map, pipe, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,6 @@ export class DatabaseService {
   createUserInDatabaseLink: string = 'https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json'
   user: User
   userId = new BehaviorSubject<any>(null);
-  // sendUserItems = new BehaviorSubject<any>(null)
   constructor(private firebase: FirebaseService, private httpClient: HttpClient) {
     this.firebase.user.subscribe((data: User) => {
       this.user = data;
@@ -37,15 +36,6 @@ export class DatabaseService {
         map(responseData => {
           const arr = Object.values(responseData);
           return arr;
-          // return { ...responseData, img: responseData.imgUrl ? responseData.imgUrl : [] }
-          return [{ ...arr[0], img: arr[0].imgUrl ? arr[0].imgUrl : [] }]
-          const itemArr = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              itemArr.push({ ...responseData[key] });
-            }
-          }
-          return itemArr;
         })
       )
   }
@@ -53,18 +43,24 @@ export class DatabaseService {
 
 
 
-  additem(item: ItemModel) {
+  addItemToUserItemList(item: ItemModel) {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
       .subscribe((userData) => {
         const userArray = Object.entries(userData);
         const user = userArray.find(([id, value]) => value.email === this.user.email);
         if (user) {
-          const userId = user[0]; // Unikalne ID użytkownika
+          const userId = user[0];
           this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
             .subscribe();
         }
       });
   }
+
+  addItemToItemList(item: ItemModel) {
+    return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, item);
+  }
+
+
 
 
 }
