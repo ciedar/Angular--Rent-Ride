@@ -9,7 +9,9 @@ import { UserCockpitComponent } from "./user-cockpit/user-cockpit.component";
 import { AddPostComponent } from "./user-cockpit/add-post/add-post.component";
 import { MessagesComponent } from "./user-cockpit/messages/messages.component";
 import { EditPasswordComponent } from "./user-cockpit/edit-password/edit-password.component";
-import { ShowUserItemsComponent } from "./user-cockpit/show-user-items/show-user-items.component";
+import { ShowUserItemsComponent } from "./user-cockpit/user-items-panel/show-user-items/show-user-items.component";
+import { UserItemsPanelComponent } from "./user-cockpit/user-items-panel/user-items-panel.component";
+import { EditComponent } from "./user-cockpit/user-items-panel/edit/edit.component";
 
 
 
@@ -27,7 +29,12 @@ const appRoutes: Routes = [
             { path: 'add', component: AddPostComponent },
             { path: 'messages', component: MessagesComponent },
             { path: 'password-edit', component: EditPasswordComponent },
-            { path: 'show-user-items', component: ShowUserItemsComponent }
+            {
+                path: 'user-items-panel', component: UserItemsPanelComponent, children: [
+                    { path: '', component: ShowUserItemsComponent },
+                    { path: 'edit', component: EditComponent }
+                ]
+            }
         ]
     }
 ]

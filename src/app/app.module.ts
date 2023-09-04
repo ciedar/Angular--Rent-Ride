@@ -15,8 +15,10 @@ import { UserCockpitComponent } from './user-cockpit/user-cockpit.component';
 import { UserPanelComponent } from './user-cockpit/user-panel/user-panel.component';
 import { AddPostComponent } from './user-cockpit/add-post/add-post.component';
 import { FooterComponent } from './footer/footer.component';
-import { ShowUserItemsComponent } from './user-cockpit/show-user-items/show-user-items.component';
+import { ShowUserItemsComponent } from './user-cockpit/user-items-panel/show-user-items/show-user-items.component';
 import { EditPasswordComponent } from './user-cockpit/edit-password/edit-password.component';
+import { UserItemsPanelComponent } from './user-cockpit/user-items-panel/user-items-panel.component';
+import { EditComponent } from './user-cockpit/user-items-panel/edit/edit.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { EditPasswordComponent } from './user-cockpit/edit-password/edit-passwor
     AddPostComponent,
     FooterComponent,
     ShowUserItemsComponent,
-    EditPasswordComponent
+    EditPasswordComponent,
+    UserItemsPanelComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
