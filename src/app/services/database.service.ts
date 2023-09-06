@@ -44,9 +44,9 @@ export class DatabaseService {
     return this.httpClient.get<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`)
       .pipe(
         map(responseData => {
-          console.log(responseData)
-          const arr = Object.values(responseData);
-          return arr;
+          const keys = Object.keys(responseData);
+          const values = Object.values(responseData);
+          return { keys, values };
         })
       )
   }
@@ -77,5 +77,23 @@ export class DatabaseService {
       'password': password
     })
 
+  }
+
+  updateUserItem(userId: string, itemId: string, item: ItemModel) {
+    return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, item)
+  }
+
+  updateUserItemInGlobalList() {
+    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json')
+      .pipe(
+        map(data => {
+          const list = Object.values(data);
+          const item = list.find((value) => {
+            return value.email === this.user.email
+          })
+          console.log(item);
+          return item;
+        })
+      )
   }
 }

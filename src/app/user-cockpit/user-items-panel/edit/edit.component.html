@@ -1,6 +1,6 @@
 <div class="container" *ngIf="item">
     <h2>Edit Item</h2>
-    <form [formGroup]="editForm">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm)">
         <div class="form-group col-6">
             <label for="name">Name:</label>
             <input type="text" id="name" class="form-control" formControlName="name">
@@ -19,12 +19,12 @@
         <div class="form-group col-6">
             <label for="imgUrl">Images:</label>
             <div formArrayName="imgUrl">
-                <div *ngFor="let img of getImg(); let i = index" class="image-control">
-                    <input type="text" class="form-control" [formControlName]="i">
+                <div *ngFor="let img of getImg(); let i = index" class="image-control" [formGroupName]="i">
+                    <input type="text" class="form-control" formControlName="img">
                 </div>
             </div>
         </div>
 
-        <button class="btn btn-primary" type="button">Save</button>
+        <button class="btn btn-primary" type="submit">Save</button>
     </form>
 </div>
