@@ -41,12 +41,14 @@ export class DatabaseService {
   }
 
   getItem(userId: string) {
-    return this.httpClient.get<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`)
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`)
       .pipe(
         map(responseData => {
           const keys = Object.keys(responseData);
           const values = Object.values(responseData);
-          return { keys, values };
+          // console.log(values)
+          return { name: values[0].name, itemDescription: values[0].itemDescription, imgUrl: values[0].imgUrl, price: values[0].price, owner: values[0].owner }
+          return values
         })
       )
   }
@@ -79,8 +81,30 @@ export class DatabaseService {
 
   }
 
-  updateUserItem(userId: string, itemId: string, item: ItemModel) {
-    return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, item)
+  updateUserItem(userId: string,
+    itemId: string,
+    name: string,
+    itemDescription: string,
+    imgUrl: string[],
+    price: number,
+    owner: string) {
+    return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, {
+      'name': name,
+      'itemDescription': itemDescription,
+      'imgUrl': imgUrl,
+      "price": price,
+      'owner': owner
+    })
+
+    // const a = Object.values(item);
+    // console.log(a[2])
+    // return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, {
+    // 'name': name,
+    // 'itemDescription': itemDescription,
+    // 'imgUrl': imgUrl,
+    // "price": price,
+    // 'owner': owner
+    // })
   }
 
   updateUserItemInGlobalList() {

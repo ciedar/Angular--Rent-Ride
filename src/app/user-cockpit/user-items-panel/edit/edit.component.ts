@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, Form } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ItemModel } from 'src/app/models/items.model';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-edit',
@@ -28,52 +29,56 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemIndex = +params['index'];
     });
-    this.database.getUserId()
-      .subscribe(data => {
-        this.userId = data;
-      })
 
     this.database.getUserId().subscribe(data => {
+      console.log(data)
       if (data) {
         this.database.getItem(data).subscribe(responseData => {
-          this.itemId = responseData.keys[this.itemIndex]
-          this.item = responseData.values[this.itemIndex];
-
+          this.item = responseData;
+          console.log(this.item)
           if (this.item) {
-            // this.item.imgUrl = this.item.imgUrl.map(imgObj => imgObj.img);
-            this.buildForm();
+            this.editForm = new FormGroup({
+              'name': new FormControl(this.item.name, Validators.required),
+              'itemDescription': new FormControl(this.item.itemDescription, Validators.required),
+              'price': new FormControl(this.item.price, Validators.required),
+              'imgUrl': new FormArray([])
+            });
+            for (let img of this.item.imgUrl) {
+              (<FormArray>this.editForm.get('imgUrl')).push(new FormGroup({
+                'img': new FormControl(img.img)
+              }))
+            }
+
           }
         });
       }
     });
   }
 
-  private buildForm() {
-    this.editForm = new FormGroup({
-      'name': new FormControl(this.item.name, Validators.required),
-      'itemDescription': new FormControl(this.item.itemDescription, Validators.required),
-      'price': new FormControl(this.item.price, Validators.required),
-      'imgUrl': new FormArray([])
-      // 'imgUrl': new FormArray(this.item.imgUrl.map(imgUrl => new FormControl(imgUrl))) // Przekształca linki z powrotem na FormControl
-    });
 
-  }
+
+
+
+
+
   getImg() {
     return (<FormArray>this.editForm.get('imgUrl')).controls;
   }
 
 
   onSubmit(data: FormGroup) {
-    const model = new ItemModel(
-      data.value.name,
-      data.value.itemDescription,
-      data.value.imgUrl,
-      data.value.price,
-      this.user.email
-    )
-    console.log(model);
+    const imgUrl = data.value.imgUrl.map(img => { return img })
+    console.log(imgUrl);
+    console.log(data.value.name)
 
-    this.database.updateUserItem(this.userId, this.itemId, model).subscribe()
+    if (imgUrl.length != 0) {
+
+      this.database.updateUserItem(this.userId, this.itemId, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
+        .subscribe(data => {
+          console.log(data);
+        })
+    }
+
   }
 
 }

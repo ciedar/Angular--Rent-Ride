@@ -39,6 +39,7 @@ export class AddPostComponent implements OnInit {
       data.value.price,
       this.user.email);
 
+    console.log(this.itemModel)
     this.databaseService.addItemToUserItemList(this.itemModel);
     this.databaseService.addItemToItemList(this.itemModel).subscribe();
 
