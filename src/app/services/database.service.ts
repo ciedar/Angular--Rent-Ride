@@ -46,8 +46,8 @@ export class DatabaseService {
         map(responseData => {
           const keys = Object.keys(responseData);
           const values = Object.values(responseData);
-          // console.log(values)
-          return { name: values[0].name, itemDescription: values[0].itemDescription, imgUrl: values[0].imgUrl, price: values[0].price, owner: values[0].owner }
+          console.log(values)
+          // return { name: values[0].name, itemDescription: values[0].itemDescription, imgUrl: values[0].imgUrl, price: values[0].price, owner: values[0].owner }
           return values
         })
       )
