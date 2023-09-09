@@ -1,18 +1,21 @@
-<div class="container-fluid col-12 mt-5" *ngFor="let item of userItems; let i = index">
-    <a class="d-flex col-8" style="cursor: pointer;">
-        <div *ngFor="let img of item.imgUrl; let c = index">
-            <img [src]="img.img" alt="item img">
+<div *ngIf="id">
 
-        </div>
-        <div class="">
-            <div>
-                <p>{{item.name}}</p>
-                <p>{{item.itemDescription}}</p>
-                <p>{{item.price}}</p>
+    <div class="container-fluid col-12 mt-5" *ngFor="let item of userItems; let i = index">
+        <a class="d-flex col-8" style="cursor: pointer;">
+            <div *ngFor="let img of item.imgUrl; let c = index">
+                <img [src]="img.img" alt="item img">
+
             </div>
-            <p class="mt-auto pt-3">22.08.2021</p>
-        </div>
-    </a>
-    <button class="btn btn-primary" (click)="editItem(i)">Edytuj</button>
+            <div class="">
+                <div>
+                    <p>{{item.name}}</p>
+                    <p>{{item.itemDescription}}</p>
+                    <p>{{item.price}}</p>
+                </div>
+                <p class="mt-auto pt-3">22.08.2021</p>
+            </div>
+        </a>
+        <button class="btn btn-primary" type="button" (click)="editItem(i)">Edytuj</button>
+        <button class="btn btn-primary" type="button" (click)="deleteItem(i)">Usuń</button>
+    </div>
 </div>
-<button (click)="getUserItems()">show</button>

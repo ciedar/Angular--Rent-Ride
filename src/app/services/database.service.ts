@@ -14,6 +14,7 @@ export class DatabaseService {
   user: User
   userId = new BehaviorSubject<any>(null);
   userPassword = new BehaviorSubject<any>(null);
+  userItems = new BehaviorSubject<any>(null);
   constructor(private firebase: FirebaseService, private httpClient: HttpClient) {
     this.firebase.user.subscribe((data: User) => {
       this.user = data;
@@ -46,6 +47,7 @@ export class DatabaseService {
         map(responseData => {
           const keys = Object.keys(responseData);
           const values = Object.values(responseData);
+          this.userItems.next({ key: keys, value: values });
           return { key: keys, value: values };
         })
       )
@@ -94,16 +96,6 @@ export class DatabaseService {
       "price": price,
       'owner': owner
     })
-
-    // const a = Object.values(item);
-    // console.log(a[2])
-    // return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, {
-    // 'name': name,
-    // 'itemDescription': itemDescription,
-    // 'imgUrl': imgUrl,
-    // "price": price,
-    // 'owner': owner
-    // })
   }
 
   updateUserItemInGlobalList() {
@@ -118,5 +110,9 @@ export class DatabaseService {
           return item;
         })
       )
+  }
+
+  deleteUserItem(userId: string, itemId: string) {
+    return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`)
   }
 }
