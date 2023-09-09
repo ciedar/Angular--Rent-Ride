@@ -46,9 +46,7 @@ export class DatabaseService {
         map(responseData => {
           const keys = Object.keys(responseData);
           const values = Object.values(responseData);
-          console.log(values)
-          // return { name: values[0].name, itemDescription: values[0].itemDescription, imgUrl: values[0].imgUrl, price: values[0].price, owner: values[0].owner }
-          return values
+          return { key: keys, value: values };
         })
       )
   }
@@ -88,6 +86,7 @@ export class DatabaseService {
     imgUrl: string[],
     price: number,
     owner: string) {
+    console.log(itemId)
     return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, {
       'name': name,
       'itemDescription': itemDescription,

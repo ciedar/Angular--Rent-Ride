@@ -31,26 +31,27 @@ export class EditComponent implements OnInit {
     });
 
     this.database.getUserId().subscribe(data => {
-      console.log(data)
+      this.userId = data;
       if (data) {
         this.database.getItem(data).subscribe(responseData => {
-          console.log(responseData)
-          this.item = responseData;
-          console.log(this.item)
+          const itemData = {
+            key: responseData.key[this.itemIndex],
+            value: responseData.value[this.itemIndex]
+          }
+          this.item = itemData;
           if (this.item) {
-            console.log(this.itemIndex)
-            console.log(this.item[this.itemIndex].name)
+            console.log(this.item)
             this.editForm = new FormGroup({
-              'name': new FormControl(this.item[this.itemIndex].name, Validators.required),
-              'itemDescription': new FormControl(this.item[this.itemIndex].itemDescription, Validators.required),
-              'price': new FormControl(this.item.price[this.itemIndex], Validators.required),
+              'name': new FormControl(this.item.value.name, Validators.required),
+              'itemDescription': new FormControl(this.item.value.itemDescription, Validators.required),
+              'price': new FormControl(this.item.value.price, Validators.required),
               'imgUrl': new FormArray([])
             });
-            // for (let img of this.item.imgUrl) {
-            //   (<FormArray>this.editForm.get('imgUrl')).push(new FormGroup({
-            //     'img': new FormControl(img.img)
-            //   }))
-            // }
+            for (let img of this.item.value.imgUrl) {
+              (<FormArray>this.editForm.get('imgUrl')).push(new FormGroup({
+                'img': new FormControl(img.img)
+              }))
+            }
 
           }
         });
@@ -75,9 +76,8 @@ export class EditComponent implements OnInit {
     console.log(data.value.name)
 
     if (imgUrl.length != 0) {
-      console.log(this.itemId)
-
-      this.database.updateUserItem(this.userId, this.itemId, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
+      console.log(this.userId)
+      this.database.updateUserItem(this.userId, this.item.key, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
         .subscribe(data => {
           console.log(data);
         })
