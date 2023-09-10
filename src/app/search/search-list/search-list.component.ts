@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription, map } from 'rxjs';
 import { ItemsService } from 'src/app/services/items.service';
 @Component({
   selector: 'app-search-list',
@@ -9,13 +10,25 @@ import { ItemsService } from 'src/app/services/items.service';
 export class SearchListComponent implements OnInit {
 
 
-  listOfItems: any[] = []
+  listOfDataItems: any[] = []
+  listOfIdItems: string[];
+  subscription: Subscription
   constructor(private itemService: ItemsService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.listOfItems = this.itemService.rows;
+    this.subscription = this.itemService.globalUsersItemsList.pipe(
+      map(data => {
+        return data
+      })
+    ).subscribe(responseData => {
+      if (responseData) {
+        this.listOfIdItems = responseData.id;
+        this.listOfDataItems = responseData.value
+        console.log(this.listOfDataItems)
+      }
+    })
   }
 
 }

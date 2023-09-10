@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ItemsService } from '../services/items.service';
 import { OurItemsService } from '../services/our-items.service';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 
 @Component({
@@ -9,14 +9,15 @@ import { FirebaseService } from '../services/firebase.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
 
   interval: any
   activeSlideIndex: number;
   TOTAL_SLIDES: number = 3;
   SLIDE_INTERVAL: number = 4000
-  items: any[] = [];
+  itemsData: any = [];
+  error: boolean = false;
   ourItems: {}[] = [];
   mainItem: any;
   startId: number = 0;
@@ -28,13 +29,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     return index === this.startId;
   }
   ngOnInit(): void {
-    this.items = this.itemService.rows;
+    this.itemService.globalUsersItemsList.subscribe(data => {
+      if (data != null) {
+        this.itemsData = data['value'];
+      }
+    }, error => {
+      this.error = !this.error;
+      return throwError(this.error);
+    });
     this.ourItems = this.ourItemsService.getItems();
     this.mainItem = this.ourItems[this.startId]
 
-    // this.interval = setInterval(() => {
-    //   this.nextSlideLogic();
-    // }, this.SLIDE_INTERVAL);
+
   }
   nextSlideLogic() {
     this.startId = (this.startId + 1) % this.TOTAL_SLIDES;
@@ -59,8 +65,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mainItem = this.ourItems[this.startId];
   }
 
-  ngOnDestroy(): void {
-    clearInterval(this.interval);
-  }
 
 }

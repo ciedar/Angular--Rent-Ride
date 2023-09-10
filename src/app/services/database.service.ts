@@ -120,4 +120,15 @@ export class DatabaseService {
   deleteUserItem(userId: string, itemId: string) {
     return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`)
   }
+
+
+  fetchGlobalUsersItemsList() {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`).pipe(
+      map(data => {
+        const keysArr = Object.keys(data);
+        const valuesArr = Object.values(data);
+        return { id: keysArr, value: valuesArr }
+      })
+    )
+  }
 }

@@ -14,7 +14,6 @@ import { __values } from 'tslib';
 })
 export class EditComponent implements OnInit {
   itemIndex: number;
-  itemId: string;
   item: any;
   userId: string;
   user: User
@@ -23,6 +22,9 @@ export class EditComponent implements OnInit {
   constructor(private route: ActivatedRoute, private database: DatabaseService, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
+
+
+
     this.firebase.user.subscribe(data => {
       this.user = data
     })
@@ -72,14 +74,11 @@ export class EditComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     const imgUrl = data.value.imgUrl.map(img => { return img })
-    console.log(imgUrl);
-    console.log(data.value.name)
+
 
     if (imgUrl.length != 0) {
-      console.log(this.userId)
       this.database.updateUserItem(this.userId, this.item.key, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
         .subscribe(data => {
-          console.log(data);
         })
     }
 

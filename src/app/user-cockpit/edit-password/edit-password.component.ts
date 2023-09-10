@@ -17,7 +17,6 @@ export class EditPasswordComponent implements OnInit {
     this.database.getUserId()
       .subscribe(data => {
         this.id = data;
-        console.log(this.id)
       })
 
     this.resetPasswordForm = new FormGroup({
@@ -29,10 +28,8 @@ export class EditPasswordComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     const pass = data.value.new;
-    console.log(pass)
     this.database.changeUserPassword(this.id, pass)
       .subscribe(data => {
-        console.log(data);
       })
   }
 

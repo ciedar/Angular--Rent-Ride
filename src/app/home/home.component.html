@@ -17,14 +17,18 @@
 
 <h1 class="text-center mt-5">Nasi użytkownicy dodali</h1>
 
-<div class="container-fluid bg-light">
-    <div class="container">
+<div class="container-fluid bg-light" *ngIf="!error">
+    <div class=" container">
         <div class="row">
-            <a [routerLink]="['/search', i]" *ngFor="let item of items; let i = index"
+            <a [routerLink]="['/search', i]" *ngFor="let item of itemsData; let i = index"
                 class="col-12 col-sm-6 col-md-4 col-lg-3 p-4 custom shadow-sm">
                 <div class="text-center">
-                    <img [src]="item.img" alt="" class="img img-fluid">
+                    <div *ngFor="let img of item.imgUrl">
+                        <img [src]="img.img" alt="" class="img img-fluid">
+                    </div>
                     <p>{{item.name}}</p>
+                    <p>{{item.itemDescription}}</p>
+                    <p>{{item.price}}</p>
                     <button class="btn btn-primary">Kup</button>
                 </div>
             </a>

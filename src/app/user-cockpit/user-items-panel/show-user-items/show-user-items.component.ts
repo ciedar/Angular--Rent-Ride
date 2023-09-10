@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, catchError, filter, map, switchMap, take, throwError } from 'rxjs';
 import { ItemModel } from 'src/app/models/items.model';
@@ -38,6 +38,7 @@ export class ShowUserItemsComponent implements OnInit {
         return throwError(this.error);
       })
   }
+
 
 
   editItem(index: number) {

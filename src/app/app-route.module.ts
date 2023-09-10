@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     {
         path: 'user-panel', component: UserCockpitComponent, children: [
             { path: 'add', component: AddPostComponent },
-            { path: 'messages', component: MessagesComponent },
+            // { path: 'messages', component: MessagesComponent },
             { path: 'password-edit', component: EditPasswordComponent },
             {
                 path: 'user-items-panel', component: UserItemsPanelComponent, children: [

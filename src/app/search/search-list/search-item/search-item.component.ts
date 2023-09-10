@@ -17,7 +17,7 @@ export class SearchItemComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.item = this.itemsService.getItem(this.id);
+      // this.item = this.itemsService.getItem(this.id);
     })
   }
 }
