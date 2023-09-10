@@ -42,11 +42,6 @@ export class HomeComponent implements OnInit {
 
 
   }
-  nextSlideLogic() {
-    this.startId = (this.startId + 1) % this.TOTAL_SLIDES;
-
-    this.updateMainItem();
-  }
 
 
   previousSlide() {

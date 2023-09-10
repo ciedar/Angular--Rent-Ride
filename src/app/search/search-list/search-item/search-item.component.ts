@@ -8,8 +8,10 @@ import { ItemsService } from 'src/app/services/items.service';
   styleUrls: ['./search-item.component.css']
 })
 export class SearchItemComponent implements OnInit {
+  display: boolean = false;
   id: number
-  item: any
+  itemData: any
+  itemId: string[]
   constructor(private route: ActivatedRoute, private itemsService: ItemsService) {
 
   }
@@ -17,7 +19,18 @@ export class SearchItemComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      // this.item = this.itemsService.getItem(this.id);
     })
+
+    if (typeof this.id === 'number') {
+      this.display = !this.display
+
+      this.itemsService.globalUsersItemsList.subscribe(data => {
+        if (data) {
+          this.itemId = data.id[this.id]
+          this.itemData = data.value[this.id]
+
+        }
+      })
+    }
   }
 }

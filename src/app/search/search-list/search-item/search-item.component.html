@@ -1,12 +1,15 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="display">
     <div class="row">
-        <img [src]="item.img" alt="" class="img img-fluid">
+        <img src="{{itemData.imgUrl[0].img}}" alt="" class="img img-fluid" style="width: 450px;">
     </div>
     <div class="row mx-auto">
-        <p class="fs-5">{{item.name}}</p>
+        <p class="fs-5">{{itemData.name}}</p>
     </div>
     <div class="col mx-auto">
-        <p class="fs-5">{{item.price}}</p>
+        <p class="fs-5">{{itemData.itemDescription}}</p>
+    </div>
+    <div class="col mx-auto">
+        <p class="fs-5">{{itemData.price}}</p>
     </div>
     <div class="col">
         <button class="btn btn-primary">Kup</button>
