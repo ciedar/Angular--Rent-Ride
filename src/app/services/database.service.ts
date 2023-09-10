@@ -3,7 +3,7 @@ import { FirebaseService } from './firebase.service';
 import { ItemModel } from '../models/items.model';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,11 @@ export class DatabaseService {
   getUserItems(userId: string) {
     return this.httpClient.get<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`)
       .pipe(
+        catchError(error => {
+          console.error(error)
+          console.error(error.message)
+          return throwError(error)
+        }),
         map(responseData => {
           const arr = Object.values(responseData);
           return arr;

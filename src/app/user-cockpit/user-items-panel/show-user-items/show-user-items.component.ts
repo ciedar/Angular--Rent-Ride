@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, catchError, filter, map, switchMap, take, throwError } from 'rxjs';
 import { ItemModel } from 'src/app/models/items.model';
 import { DatabaseService } from 'src/app/services/database.service';
 
@@ -9,46 +9,36 @@ import { DatabaseService } from 'src/app/services/database.service';
   templateUrl: './show-user-items.component.html',
   styleUrls: ['./show-user-items.component.css']
 })
-export class ShowUserItemsComponent implements OnInit, OnDestroy {
-
+export class ShowUserItemsComponent implements OnInit {
+  error: string = ''
   userItems: any
-  id: string
+  userId: string
   itemId: string;
   itemData: any
-  // itemsSubscription: Subscription
   editItemEvent = new BehaviorSubject<any>(null);
   constructor(private database: DatabaseService, private router: Router, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    // this.route.params.subscribe(params => {
-    //   this.itemId = +params['index'];
-    //   console.log(this.itemId)
-    // })
-
-    this.database.getUserId()
-      .subscribe(data => {
-        this.id = data;
-        if (this.id) {
-          this.database.getItem(this.id)
-            .subscribe(data => {
-              // console.log(data)
-              this.itemData = data
-
-            })
-          this.getUserItems();
-        }
+    this.database.getUserId().pipe(
+      take(1),
+      switchMap(data => {
+        this.userId = data;
+        return this.database.getUserItems(data)
+      }),
+      take(1),
+      switchMap(responseData => {
+        this.userItems = responseData;
+        return this.database.getItem(this.userId)
+      })).subscribe((data) => {
+        this.itemData = data
+        this.error = '';
+      }, error => {
+        this.error = 'Na Twojej liście nie znajdują sie żadne przedmioty'
+        return throwError(this.error);
       })
   }
-  ngOnDestroy(): void {
-    // this.itemsSubscription.unsubscribe()
-  }
-  getUserItems() {
-    this.database.getUserItems(this.id)
-      .subscribe(data => {
-        this.userItems = data;
-      })
-  }
+
 
   editItem(index: number) {
     this.router.navigate(['edit', index], { relativeTo: this.route });
@@ -58,7 +48,7 @@ export class ShowUserItemsComponent implements OnInit, OnDestroy {
   deleteItem(index: number) {
     const itemId = this.itemData.key[index];
     console.log(itemId)
-    this.database.deleteUserItem(this.id, itemId)
+    this.database.deleteUserItem(this.userId, itemId)
       .subscribe()
   }
 }
