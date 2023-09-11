@@ -26,9 +26,17 @@ export class DatabaseService {
       .pipe(
         map(data => {
           const user = Object.entries(data).find(([id, value]) => value.email === this.user.email)
+          console.log(data);
           return user[0]
         })
       )
+  }
+  getUserInfo(id: string) {
+    return this.httpClient.get<User>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json`)
+  }
+
+  getOwnerOfItem(id) {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/${id}.json`)
   }
 
   getUserItems(userId: string) {

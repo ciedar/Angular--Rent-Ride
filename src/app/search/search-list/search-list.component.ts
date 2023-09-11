@@ -12,13 +12,13 @@ export class SearchListComponent implements OnInit {
 
   listOfDataItems: any[] = []
   listOfIdItems: string[];
-  subscription: Subscription
+
   constructor(private itemService: ItemsService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.subscription = this.itemService.globalUsersItemsList.pipe(
+    this.itemService.globalUsersItemsList.pipe(
       map(data => {
         return data
       })

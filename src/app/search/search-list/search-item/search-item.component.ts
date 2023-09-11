@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DatabaseService } from 'src/app/services/database.service';
 import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class SearchItemComponent implements OnInit {
   id: number
   itemData: any
   itemId: string[]
-  constructor(private route: ActivatedRoute, private itemsService: ItemsService) {
+  sellerData: any;
+  constructor(private route: ActivatedRoute,
+    private itemsService: ItemsService,
+    private database: DatabaseService) {
 
   }
 
@@ -28,7 +32,9 @@ export class SearchItemComponent implements OnInit {
         if (data) {
           this.itemId = data.id[this.id]
           this.itemData = data.value[this.id]
-
+          this.database.getOwnerOfItem(this.itemId).subscribe(data => {
+            this.sellerData = data;
+          })
         }
       })
     }

@@ -1,16 +1,18 @@
-<div class="container-fluid pt-5">
-    <div class="row col-6 mx-auto">
-        <div class="row">
-            <img src="" alt="Awatar użytkownika">
-            <h5>username: username1</h5>
-            <h5>e-mail: email@example.com</h5>
-        </div>
+<div *ngIf="user">
+    <div class="container-fluid pt-5">
+        <div class="row col-6 mx-auto">
+            <div class="row text-center justify-content-center">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAACDCAMAAACZQ1hUAAAAYFBMVEX///9UWV26vL1GTFFRVlr4+flydnlMUlZJT1NPVFlARkv8/PzFxsdDSU7Iyco3PkPs7e2HioyZnJ5laWyytLXf3+Dl5uagoqR/goTR0tNeY2aqrK14fH+Ulpjz8/Nrb3IC4ENrAAADcElEQVR4nO2a2ZajIBBAgxuL4BI10UTl//9ytNPpJNMRgS5sZw73JY+5pywKqOJw8Hg8sIxNFgRB1oy/9PfZWeY5E2EYCpbn8pxtLBJ3JSIkQg8iQlDZxZsZpDwRGH0HC8nTbRQyyaI3Bh/RYDLbwKBoBV0wmKGiLVwrdBeiMJghl86tQi2WPsPTBxG1S4Vjvmowkx8dKoRaCgiFziTOugqTxNmNAmfaCggx7kLhZKIwSZzgFeJEVRa+QxP4wn0VRgoIiSu0wundBqEGQ3+N0sKhhFUo9IrTKznsznE2D8MUCNAiEZutiTsUcmlkZrXhDoM8TJSWcQDMyrFa37HfEVVw59xm7dyyBGnAHLhpjbwj4Hauo3Uc4M4RvV1KTknZgzlc7FJySsoLmIOtwiThHf5Dhz3k5B7W5h5qVGBdqwMwh0b/gvVXHOD2rD3s3Yf2988wZlfNB6CXzj2caQ9Hq7M9bBfiZHXHAb7s7eCudziZZwQF70AYNIJuOGgHxYZ1KqocNK930Asy3LkAd6sXtNuTLhuUg+7nYIMrhWlx6EkwRx3SG1ei0TMn4B25VzhZK5iYOGnRPjO2i1OcjyCwdovZGq8WhxiRqJwH4cYYoLdfBBMUbDhg5GUu8PM2RrHI241i8EXKhx6xzxkrQ/2w1Vjxlbg4dTyoA96diu2mqx7P/knTOP2FRZmORdMF16FNpJTVzPSbtMM16JpidC8UN/XQVpixkGAaPUMxCRnDVTvUjbtiUfCjzFk4/bVq34xoyHJ55A5eIDS1pETjAPNpQgiVNVwDZKKoExyatkGiECc1VDSaQRgL3DVECRGMTDKbe/8d+vMXMl0S2vYmvyxI8pPHKWOpfH+jbSFK6+NV8KOv8Axmdle/orftSr4j7C2WSIOggnADI+MVwpW3CBsi007h1a4hqYYZ3QGvkKnwIDSQCFxEYUZ/eVh2hrUkNHOiodDp+CCieqvjAlEbl6BaEy7jRqQZOm3LxqYzbUK+/jUsxyX60HZNoXP7JWbCta3c8FWcDTRZyQbYjeo9WJ0RZ9tpqglEvTSQu/L0IEIqBatnceYoH9IF7lfFjLKpbzW+M0c58LN8k2aKav6b9luk5JSU/XKHIE42clC89/UO3sE7eAfv4B28g3fwDpYOch4du0fIZYeUB9vwO7Nxj+df4g/5Tz5iO2fabQAAAABJRU5ErkJggg=="
+                    alt="Awatar użytkownika" style="max-width: 200px; border-radius: 50%;" c>
+                <h5 class="mx-auto">nazwa użytkownika: {{user.username}} </h5>
+                <h5>e-mail: {{user.email}}</h5>
+            </div>
 
-        <div class="row d-flex flex-column">
-            <button class="btn btn-outline-primary col" [routerLink]="['password-edit']">Zmień hasło</button>
-            <button class="btn btn-outline-primary col" [routerLink]="['add']">Dodaj ogłoszenie</button>
-            <!-- <button class="btn btn-outline-primary col" [routerLink]="['messages']">Wiadomości</button> -->
-            <button class="btn btn-outline-primary col" [routerLink]="['user-items-panel']">Moje przedmioty</button>
+            <div class="row d-flex flex-column">
+                <button class="btn btn-outline-primary col" [routerLink]="['password-edit']">Zmień hasło</button>
+                <button class="btn btn-outline-primary col" [routerLink]="['add']">Dodaj ogłoszenie</button>
+                <button class="btn btn-outline-primary col" [routerLink]="['user-items-panel']">Moje przedmioty</button>
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray, Form } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/models/user.model';
@@ -19,7 +19,7 @@ export class EditComponent implements OnInit {
   user: User
   editForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private database: DatabaseService, private firebase: FirebaseService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseService, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
 
@@ -83,5 +83,10 @@ export class EditComponent implements OnInit {
     }
 
   }
+
+  cancel() {
+    this.router.navigate(['/user-panel/user-items-panel']);
+  }
+
 
 }

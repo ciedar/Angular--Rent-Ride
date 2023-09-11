@@ -51,7 +51,7 @@ export class AuthComponent implements OnInit {
     }
 
     obs.subscribe(data => {
-      this.router.navigate(['/user-panel'])
+      this.router.navigate([''])
     }, error => {
       this.error = error;
     })
