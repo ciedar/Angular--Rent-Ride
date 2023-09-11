@@ -32,8 +32,10 @@ export class SearchItemComponent implements OnInit {
         if (data) {
           this.itemId = data.id[this.id]
           this.itemData = data.value[this.id]
+          console.log(this.itemData)
           this.database.getOwnerOfItem(this.itemId).subscribe(data => {
             this.sellerData = data;
+            console.log(this.sellerData)
           })
         }
       })
