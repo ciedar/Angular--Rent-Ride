@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
     })
 
     if (!this.loginMode) {
-      this.registerForm.addControl('username', new FormControl(null, [Validators.required, this.checkUsernameValidator.bind(this)]));
+      this.registerForm.addControl('username', new FormControl(null, [this.checkUsernameValidator.bind(this)]));
     }
   }
 
@@ -73,15 +73,18 @@ export class AuthComponent implements OnInit {
           return values
         })
       ).subscribe((dataResponse) => {
+        console.log(dataResponse)
         if (dataResponse.includes(data.value)) {
-          console.log(data.value)
+          console.log('t', data.value)
           resolve(
-            { 'zajęty': dataResponse }
+            { 'zajęty': true }
           )
         } else {
+          console.log('n', data.value)
           return null
         }
       });
+      return null
     })
   }
 
