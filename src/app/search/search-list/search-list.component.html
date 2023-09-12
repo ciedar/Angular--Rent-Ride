@@ -1,16 +1,37 @@
-<div *ngFor="let item of listOfDataItems; let i = index" class="text-center container mt-5 bg-light col-12">
+<!-- <div *ngFor="let item of listOfDataItems; let i = index" class="container mt-5 bg-light col-12">
     <a [routerLink]="[i]" class="col-12 row" style="cursor: pointer;">
-        <div class="col-4" *ngFor="let itemUrl of item.imgUrl">
-            <img [src]="itemUrl.img" alt="">
+        <div class="col-2 align-items-start" *ngFor="let itemUrl of item.imgUrl">
+            <img [src]="itemUrl.img" alt="" style="width: 200px; height: 150px;">
         </div>
-        <div class="col-4 text-left">
-            <div class="m-2 text-left">
+        <div class="col-9">
+            <div class="">
                 <p>{{item.name}}</p>
-                <p>{{item.itemDescription}}</p>
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quis veritatis aut vitae aspernatur ab
+                laborum officiis, facere optio quia!
             </div>
         </div>
-        <div class="col-4 row align-self-end">
-            <button class="btn btn-outline-success justify-content-end ">{{item.price}}</button>
+        <div class="col-1 align-self-end text-right">
+            <button class="btn btn-outline-success col-12">{{item.price}}</button>
         </div>
     </a>
+</div> -->
+<div class="container mt-5">
+    <div *ngFor="let item of listOfDataItems; let i = index" class="mt-4 bg-light">
+        <a [routerLink]="[i]" class="row item-link mt-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-12">
+                <div *ngFor="let itemUrl of item.imgUrl" class="text-center">
+                    <img [src]="itemUrl.img" alt="Product Image" class="product-image img-fluid" style="height: 150px;">
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-8 col-12">
+                <div class="item-description">
+                    <p>{{item.name}}</p>
+                    <p>{{item.itemDescription}}</p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quis veritatis aut vitae aspernatur
+                    ab laborum officiis, facere optio quia!
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
