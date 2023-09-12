@@ -12,7 +12,6 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'RentRideAngular';
   user: User
   subscription: Subscription
-
   constructor(private firebase: FirebaseService) {
 
   }
@@ -22,9 +21,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.user = data;
     })
     this.firebase.autoLogin()
+
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 
 }

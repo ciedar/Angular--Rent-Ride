@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms'
 import { AuthResponseData, FirebaseService } from '../services/firebase.service';
-import { Observable } from 'rxjs';
+import { Observable, map, mergeMap } from 'rxjs';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../services/database.service';
 
 
 
@@ -19,18 +20,19 @@ export class AuthComponent implements OnInit {
   loginMode: boolean = false;
   error: null
   user: User
-  constructor(private firebase: FirebaseService, private router: Router) {
+  constructor(private firebase: FirebaseService, private router: Router, private database: DatabaseService) {
 
   }
 
   ngOnInit(): void {
+    // this.checkUsernameValidator(this.registerForm.get('username'));
     this.registerForm = new FormGroup({
       'email': new FormControl(null, [Validators.email, Validators.required]),
       'password': new FormControl(null, [Validators.minLength(6), Validators.required])
     })
 
     if (!this.loginMode) {
-      this.registerForm.addControl('username', new FormControl(null));
+      this.registerForm.addControl('username', new FormControl(null, [Validators.required, this.checkUsernameValidator.bind(this)]));
     }
   }
 
@@ -55,6 +57,7 @@ export class AuthComponent implements OnInit {
     }, error => {
       this.error = error;
     })
+    console.log(data);
 
   }
 
@@ -62,5 +65,36 @@ export class AuthComponent implements OnInit {
     this.loginMode = !this.loginMode;
   }
 
+  checkUsernameValidator(data: FormControl): Promise<ValidationErrors> {
+    return new Promise((resolve, reject) => {
+      this.database.getUserList().pipe(
+        map(data => {
+          const values = Object.values(data).map(b => b.username);
+          return values
+        })
+      ).subscribe((dataResponse) => {
+        if (dataResponse.includes(data.value)) {
+          console.log(data.value)
+          resolve(
+            { 'zajęty': dataResponse }
+          )
+        } else {
+          return null
+        }
+      });
+    })
+  }
 
 }
+
+// const usernameArr: string[] = [];
+// console.log(data.value)
+//  this.database.getUserList().pipe(
+//   map(data => {
+//     const values = Object.values(data);
+//     for (let obj of values) {
+//       usernameArr.push(obj.username);
+//     }
+//   })
+// ).subscribe();
+  // return null;

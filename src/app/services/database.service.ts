@@ -21,6 +21,10 @@ export class DatabaseService {
     })
   }
 
+  getUserList() {
+    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+  }
+
   getUserId() {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
       .pipe(
