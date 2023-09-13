@@ -15,6 +15,7 @@ export class DatabaseService {
   userId = new BehaviorSubject<any>(null);
   userPassword = new BehaviorSubject<any>(null);
   userItems = new BehaviorSubject<any>(null);
+  existedUsernames = new BehaviorSubject<any>(null);
   constructor(private firebase: FirebaseService, private httpClient: HttpClient) {
     this.firebase.user.subscribe((data: User) => {
       this.user = data;
@@ -23,6 +24,11 @@ export class DatabaseService {
 
   getUserList() {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+      .pipe(
+        map(data => {
+          return Object.values(data).map(responseData => responseData.username);
+        }
+        ))
   }
 
   getUserId() {
