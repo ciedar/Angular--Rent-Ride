@@ -22,9 +22,9 @@
             <div class="col-8 col-md-4">
                 <label for="username">Nazwa użytkownika</label>
                 <input type="text" id="username" class="form-control" placeholder="username" formControlName="username">
-                <!-- <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched"
-                    style="color: red;">Nazwa użtkownika jest zajęta</span> -->
-                <span *ngIf="registerForm.get('username').hasError('zajęty')">zajete</span>
+                <span *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched"
+                    style="color: red;">Nazwa użytkownika jest już
+                    zajęta</span>
             </div>
         </div>
         <div *ngIf="error" class="row justify-content-center text-center">
@@ -36,6 +36,8 @@
                     <button [disabled]="!registerForm.valid" type="submit" class="btn btn-primary me-3">{{!loginMode ?
                         "Register" :
                         'Login'}}</button>
+
+
                     <button (click)="switchMode()" type="button" class="btn btn-outline-success">{{!loginMode ?
                         "Switch to login" : "Switch to Register" }}</button>
                 </div>
