@@ -115,7 +115,6 @@ export class DatabaseService {
     imgUrl: string[],
     price: number,
     owner: string) {
-    console.log(itemId)
     return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`, {
       'name': name,
       'itemDescription': itemDescription,
@@ -125,18 +124,24 @@ export class DatabaseService {
     })
   }
 
-  updateUserItemInGlobalList() {
-    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json')
+  getGlobalItemId() {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/.json`)
       .pipe(
-        map(data => {
-          const list = Object.values(data);
-          const item = list.find((value) => {
-            return value.email === this.user.email
-          })
-          console.log(item);
-          return item;
+        map(response => {
+          return Object.entries(response).filter(data => data[1].owner === 'darek12@wp.pl');
+          // return responseData.map(data => { return Object })
         })
       )
+  }
+
+  updateUserItemInGlobalList(itemId: string, itemName: string, itemDescription: string, itemPrice: number, imgUrl: [], owner: string) {
+    return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/${itemId}.json`, {
+      'imgUrl': imgUrl,
+      'itemDescription': itemDescription,
+      'name': itemName,
+      'price': itemPrice,
+      'owner': owner
+    })
   }
 
   deleteUserItem(userId: string, itemId: string) {

@@ -42,7 +42,6 @@ export class EditComponent implements OnInit {
           }
           this.item = itemData;
           if (this.item) {
-            console.log(this.item)
             this.editForm = new FormGroup({
               'name': new FormControl(this.item.value.name, Validators.required),
               'itemDescription': new FormControl(this.item.value.itemDescription, Validators.required),
@@ -74,12 +73,14 @@ export class EditComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     const imgUrl = data.value.imgUrl.map(img => { return img })
-
+    this.database.getGlobalItemId().subscribe(data => console.log(data));
 
     if (imgUrl.length != 0) {
       this.database.updateUserItem(this.userId, this.item.key, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
         .subscribe(data => {
         })
+      this.database.updateUserItemInGlobalList(this.item.key, data.value.name, data.value.itemDescription, data.value.price, imgUrl, this.user.email)
+        .subscribe()
     }
 
   }

@@ -40,7 +40,7 @@ export class EditPasswordComponent implements OnInit {
       .subscribe(() => {
         this.firebase.firebaseAuthChangeUserPassword(this.user.token, pass)
           .subscribe(() => {
-
+            this.clearForm();
           })
       })
   }
@@ -50,3 +50,6 @@ export class EditPasswordComponent implements OnInit {
     this.resetPasswordForm.reset();
   }
 }
+
+
+

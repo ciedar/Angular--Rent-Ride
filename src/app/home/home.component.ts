@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     this.itemService.globalUsersItemsList.subscribe(data => {
       if (data != null) {
         this.itemsData = data['value'];
+        console.log(this.itemsData);
       }
     }, error => {
       this.error = !this.error;
