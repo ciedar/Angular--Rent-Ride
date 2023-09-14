@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-password',
@@ -11,9 +14,13 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class EditPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup
   id: string
-  constructor(private httpClient: HttpClient, private database: DatabaseService) { }
+  user: User
+  constructor(private httpClient: HttpClient, private database: DatabaseService, private firebase: FirebaseService) { }
 
   ngOnInit() {
+    this.firebase.user.subscribe(data => {
+      this.user = data;
+    })
     this.database.getUserId()
       .subscribe(data => {
         this.id = data;
@@ -28,8 +35,13 @@ export class EditPasswordComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     const pass = data.value.new;
+
     this.database.changeUserPassword(this.id, pass)
-      .subscribe(data => {
+      .subscribe(() => {
+        this.firebase.firebaseAuthChangeUserPassword(this.user.token, pass)
+          .subscribe(() => {
+
+          })
       })
   }
 

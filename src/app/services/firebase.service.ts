@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError, } from 'rxjs';
 
 
 
@@ -48,6 +48,17 @@ export class FirebaseService {
   error: string
   constructor(private httpClient: HttpClient, private router: Router) {
 
+  }
+
+  firebaseAuthChangeUserPassword(idToken: string, password: string) {
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${this.firebaseConfig.apiKey}`;
+    const requestData = {
+      idToken: idToken,
+      password: password,
+      returnSecureToken: true
+    }
+
+    return this.httpClient.post(url, requestData)
   }
 
   createUserInDatabase(email: string, password: string, username: string) {
