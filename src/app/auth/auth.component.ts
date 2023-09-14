@@ -40,6 +40,8 @@ export class AuthComponent implements OnInit {
   submitForm(data: FormGroup) {
 
     this.firebase.user.subscribe((data: User) => {
+
+      console.log(data)
       this.user = data;
 
     })

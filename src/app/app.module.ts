@@ -19,6 +19,7 @@ import { ShowUserItemsComponent } from './user-cockpit/user-items-panel/show-use
 import { EditPasswordComponent } from './user-cockpit/edit-password/edit-password.component';
 import { UserItemsPanelComponent } from './user-cockpit/user-items-panel/user-items-panel.component';
 import { EditComponent } from './user-cockpit/user-items-panel/edit/edit.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 
 @NgModule({
@@ -47,7 +48,9 @@ import { EditComponent } from './user-cockpit/user-items-panel/edit/edit.compone
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
