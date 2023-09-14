@@ -19,7 +19,6 @@ export class AuthComponent implements OnInit {
   registerForm: FormGroup
   loginMode: boolean = false;
   error: null
-  disabled: boolean = false
   user: User
   usernames: string[] = [];
   constructor(private firebase: FirebaseService, private router: Router, private database: DatabaseService) {
@@ -31,14 +30,10 @@ export class AuthComponent implements OnInit {
 
     this.registerForm = new FormGroup({
       'email': new FormControl(null, [Validators.email, Validators.required]),
-      'password': new FormControl(null, [Validators.minLength(6), Validators.required])
+      'password': new FormControl(null, [Validators.minLength(6), Validators.required]),
+      'username': new FormControl(null, Validators.required, this.validateUsername.bind(this))
     })
 
-    if (!this.loginMode) {
-      this.registerForm.addControl('username', new FormControl(null, [], this.validateUsername.bind(this)));
-    } else {
-      this.registerForm.get('username').setValue(null);
-    }
   }
 
 
@@ -69,6 +64,12 @@ export class AuthComponent implements OnInit {
 
   switchMode() {
     this.loginMode = !this.loginMode;
+    if (!this.loginMode) {
+      this.registerForm.get('username').enable();
+    } else {
+      this.registerForm.get('username').setValue(null)
+      this.registerForm.get('username').disable()
+    }
   }
 
 
