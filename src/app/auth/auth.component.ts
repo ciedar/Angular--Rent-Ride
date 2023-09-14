@@ -53,7 +53,9 @@ export class AuthComponent implements OnInit {
     }
 
     obs.subscribe(dataa => {
-      this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
+      if (!this.loginMode) {
+        this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
+      }
       this.router.navigate([''])
     }, error => {
       this.error = error;
@@ -76,6 +78,9 @@ export class AuthComponent implements OnInit {
   validateUsername(data: FormControl): Observable<{ [key: string]: boolean }> {
     return this.database.getUserList().pipe(
       map(userList => {
+        console.log(userList)
+        if (!userList) return null;
+
         if (userList.indexOf(data.value) !== -1) {
           return { 'userExist': true }
         } else {

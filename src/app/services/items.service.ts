@@ -12,22 +12,17 @@ export class ItemsService implements OnInit {
 
   constructor(private database: DatabaseService) {
     this.database.fetchGlobalUsersItemsList().subscribe(data => {
-      this.list = data;
-      return this.globalUsersItemsList.next(data);
+      if (data) {
+        this.list = data;
+        return this.globalUsersItemsList.next(data);
+      } else {
+        return
+      }
     })
   }
 
   ngOnInit(): void {
-    // this.database.fetchGlobalUsersItemsList().subscribe(data => {
-    //   this.list = data;
-    //   console.log(this.list)
-    //   return this.globalUsersItemsList.next(data);
-    // })
+
   }
 
-
-  // getItem(id: number) {
-  //   console.log(this.list);
-  //   return this.list[id];
-  // }
 }

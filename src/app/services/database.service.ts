@@ -26,7 +26,11 @@ export class DatabaseService {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
       .pipe(
         map(data => {
-          return Object.values(data).map(responseData => responseData.username);
+          if (data) {
+            return Object.values(data).map(responseData => responseData.username);
+          } else {
+            return [];
+          }
         }
         ))
   }
@@ -143,9 +147,13 @@ export class DatabaseService {
   fetchGlobalUsersItemsList() {
     return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`).pipe(
       map(data => {
-        const keysArr = Object.keys(data);
-        const valuesArr = Object.values(data);
-        return { id: keysArr, value: valuesArr }
+        if (data) {
+          const keysArr = Object.keys(data);
+          const valuesArr = Object.values(data);
+          return { id: keysArr, value: valuesArr }
+        } else {
+          return null;
+        }
       })
     )
   }
