@@ -35,7 +35,9 @@ export class AuthComponent implements OnInit {
     })
 
     if (!this.loginMode) {
-      this.registerForm.addControl('username', new FormControl(null, Validators.required, this.validateUsername.bind(this)));
+      this.registerForm.addControl('username', new FormControl(null, [], this.validateUsername.bind(this)));
+    } else {
+      this.registerForm.get('username').setValue(null);
     }
   }
 
@@ -50,13 +52,13 @@ export class AuthComponent implements OnInit {
 
     if (!this.loginMode) {
       obs = this.firebase.registerWithEmailAndPassword(data.value.email, data.value.password);
-      this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
 
     } else {
       obs = this.firebase.loginWithEmailAndPassword(data.value.email, data.value.password);
     }
 
-    obs.subscribe(data => {
+    obs.subscribe(dataa => {
+      this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
       this.router.navigate([''])
     }, error => {
       this.error = error;
