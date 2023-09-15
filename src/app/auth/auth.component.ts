@@ -40,10 +40,7 @@ export class AuthComponent implements OnInit {
   submitForm(data: FormGroup) {
 
     this.firebase.user.subscribe((data: User) => {
-
-      console.log(data)
       this.user = data;
-
     })
     let obs = new Observable<AuthResponseData>
 
@@ -62,8 +59,6 @@ export class AuthComponent implements OnInit {
     }, error => {
       this.error = error;
     })
-    console.log(data);
-
   }
 
   switchMode() {

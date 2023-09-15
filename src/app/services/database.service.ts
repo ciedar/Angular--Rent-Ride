@@ -40,7 +40,6 @@ export class DatabaseService {
       .pipe(
         map(data => {
           const user = Object.entries(data).find(([id, value]) => value.email === this.user.email)
-          console.log(data);
           return user[0]
         })
       )
@@ -96,8 +95,8 @@ export class DatabaseService {
       });
   }
 
-  addItemToItemList(item: ItemModel) {
-    return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, item);
+  addItemToItemList(item: ItemModel, itemId: string) {
+    return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, [item, itemId]);
   }
 
 
@@ -129,7 +128,7 @@ export class DatabaseService {
       .pipe(
         map(response => {
           return Object.entries(response).filter(data => data[1].owner === 'darek12@wp.pl');
-          // return responseData.map(data => { return Object })
+
         })
       )
   }

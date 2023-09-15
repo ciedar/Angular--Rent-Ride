@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, Form } from '@angular/forms';
+import { filter, find, map, mergeMap, switchMap, take } from 'rxjs';
 import { ItemModel } from 'src/app/models/items.model';
 import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -14,7 +15,7 @@ export class AddPostComponent implements OnInit {
   user: User;
   itemModel: ItemModel;
   addItemPost: FormGroup;
-
+  lastAddedItemId: string;
   constructor(private databaseService: DatabaseService, private firebase: FirebaseService) {
 
   }
@@ -31,6 +32,21 @@ export class AddPostComponent implements OnInit {
     })
   }
 
+
+  takeIdItemAddedByUser() {
+    return this.databaseService.getUserId().pipe(
+      take(1),
+      mergeMap(data => {
+        return this.databaseService.getItem(data)
+      }),
+      map(mapData => {
+        const length = mapData.value.length;
+        const v = Object.values(mapData);
+        return v[0][length - 1]
+      })
+    )
+  }
+
   postItem(data: FormGroup) {
     this.itemModel = new ItemModel(
       data.value.name,
@@ -40,7 +56,11 @@ export class AddPostComponent implements OnInit {
       this.user.email);
 
     this.databaseService.addItemToUserItemList(this.itemModel);
-    this.databaseService.addItemToItemList(this.itemModel).subscribe();
+    this.takeIdItemAddedByUser().subscribe(resData => {
+      this.databaseService.addItemToItemList(this.itemModel, resData).subscribe();
+
+    })
+
 
     for (let i = 0; i <= (<FormArray>this.addItemPost.get('imgUrl')).controls.length; i++) {
       (<FormArray>this.addItemPost.get('imgUrl')).removeAt(i);
