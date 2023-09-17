@@ -36,6 +36,7 @@ export class EditComponent implements OnInit {
       this.userId = data;
       if (data) {
         this.database.getItem(data).subscribe(responseData => {
+          console.log(responseData);
           const itemData = {
             key: responseData.key[this.itemIndex],
             value: responseData.value[this.itemIndex]

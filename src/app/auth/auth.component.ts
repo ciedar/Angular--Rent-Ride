@@ -55,7 +55,7 @@ export class AuthComponent implements OnInit {
       if (!this.loginMode) {
         this.firebase.createUserInDatabase(data.value.email, data.value.password, data.value.username).subscribe();
       }
-      this.router.navigate([''])
+      this.router.navigate(['/user-panel'])
     }, error => {
       this.error = error;
     })

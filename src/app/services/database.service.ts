@@ -95,8 +95,8 @@ export class DatabaseService {
       });
   }
 
-  addItemToItemList(item: ItemModel, itemId: string) {
-    return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, [item, itemId]);
+  addItemToItemList(item: ItemModel) {
+    return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, item);
   }
 
 

@@ -40,9 +40,8 @@ export class AddPostComponent implements OnInit {
         return this.databaseService.getItem(data)
       }),
       map(mapData => {
-        const length = mapData.value.length;
         const v = Object.values(mapData);
-        return v[0][length - 1]
+        return v[0]
       })
     )
   }
@@ -55,9 +54,10 @@ export class AddPostComponent implements OnInit {
       data.value.price,
       this.user.email);
 
-    this.databaseService.addItemToUserItemList(this.itemModel);
+    this.databaseService.addItemToUserItemList(this.itemModel)
     this.takeIdItemAddedByUser().subscribe(resData => {
-      this.databaseService.addItemToItemList(this.itemModel, resData).subscribe();
+      this.itemModel.projectId = resData[resData.length - 1]
+      this.databaseService.addItemToItemList(this.itemModel).subscribe();
 
     })
 

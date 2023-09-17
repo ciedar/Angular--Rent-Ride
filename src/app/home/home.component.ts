@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.itemService.globalUsersItemsList.subscribe(data => {
       if (data != null) {
+        console.log(data);
+        // this.itemsData = {}
         this.itemsData = data['value'];
         console.log(this.itemsData);
       }
