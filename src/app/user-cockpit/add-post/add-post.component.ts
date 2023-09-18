@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, Form } from '@angular/forms';
-import { filter, find, map, mergeMap, switchMap, take } from 'rxjs';
+import { Subscription, filter, find, map, mergeMap, switchMap, take } from 'rxjs';
 import { ItemModel } from 'src/app/models/items.model';
 import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -16,6 +16,7 @@ export class AddPostComponent implements OnInit {
   itemModel: ItemModel;
   addItemPost: FormGroup;
   lastAddedItemId: string;
+  addItemSub: any
   constructor(private databaseService: DatabaseService, private firebase: FirebaseService) {
 
   }
@@ -37,10 +38,15 @@ export class AddPostComponent implements OnInit {
     return this.databaseService.getUserId().pipe(
       take(1),
       mergeMap(data => {
+        if (!data) return null;
+        console.log('sieeee')
         return this.databaseService.getItem(data)
       }),
       map(mapData => {
+        if (!mapData) return null;
+        console.log('sie')
         const v = Object.values(mapData);
+        console.log(v[0]);
         return v[0]
       })
     )
@@ -54,13 +60,18 @@ export class AddPostComponent implements OnInit {
       data.value.price,
       this.user.email);
 
-    this.databaseService.addItemToUserItemList(this.itemModel)
-    this.takeIdItemAddedByUser().subscribe(resData => {
-      this.itemModel.projectId = resData[resData.length - 1]
-      this.databaseService.addItemToItemList(this.itemModel).subscribe();
 
-    })
 
+    this.addItemSub = this.databaseService.addItemToUserItemList(this.itemModel)
+    if (this.addItemSub instanceof Subscription) {
+      console.log('sub')
+      this.takeIdItemAddedByUser().subscribe(resData => {
+        console.log(resData);
+        console.log('robi')
+        this.itemModel.projectId = resData[resData.length]
+        this.databaseService.addItemToItemList(this.itemModel).subscribe();
+      })
+    }
 
     for (let i = 0; i <= (<FormArray>this.addItemPost.get('imgUrl')).controls.length; i++) {
       (<FormArray>this.addItemPost.get('imgUrl')).removeAt(i);

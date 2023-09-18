@@ -9,7 +9,7 @@ import { FirebaseService } from '../services/firebase.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
 
   interval: any
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   ourItems: {}[] = [];
   mainItem: any;
   startId: number = 0;
+  subscription: Subscription
   constructor(private itemService: ItemsService, private ourItemsService: OurItemsService, private firebase: FirebaseService) {
 
   }
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
     return index === this.startId;
   }
   ngOnInit(): void {
-    this.itemService.globalUsersItemsList.subscribe(data => {
+    this.subscription = this.itemService.globalUsersItemsList.subscribe(data => {
       if (data != null) {
         console.log(data);
         // this.itemsData = {}
@@ -63,5 +64,7 @@ export class HomeComponent implements OnInit {
     this.mainItem = this.ourItems[this.startId];
   }
 
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

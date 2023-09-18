@@ -20,6 +20,10 @@ export class ShowUserItemsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.showUserItems();
+  }
+
+  showUserItems() {
     this.database.getUserId().pipe(
       take(1),
       switchMap(data => {
@@ -40,7 +44,6 @@ export class ShowUserItemsComponent implements OnInit {
   }
 
 
-
   editItem(index: number) {
     this.router.navigate(['edit', index], { relativeTo: this.route });
     this.editItemEvent.next(index);
@@ -51,5 +54,7 @@ export class ShowUserItemsComponent implements OnInit {
     console.log(itemId)
     this.database.deleteUserItem(this.userId, itemId)
       .subscribe()
+
+    this.showUserItems();
   }
 }

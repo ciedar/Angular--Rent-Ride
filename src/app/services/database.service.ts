@@ -89,8 +89,11 @@ export class DatabaseService {
         const user = userArray.find(([id, value]) => value.email === this.user.email);
         if (user) {
           const userId = user[0];
+          console.log('działam')
           this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
-            .subscribe();
+            .subscribe(() => {
+              console.log('działam')
+            });
         }
       });
   }

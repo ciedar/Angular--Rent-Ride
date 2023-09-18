@@ -26,3 +26,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     )
   }
 }
+
+
+
+// INDEKSOWANIE PO UTWORZENIU UUZYTOWNIKA 
