@@ -50,9 +50,13 @@ export class ShowUserItemsComponent implements OnInit {
   }
 
   deleteItem(index: number) {
+
     const itemId = this.itemData.key[index];
     console.log(itemId)
     this.database.deleteUserItem(this.userId, itemId)
+      .subscribe()
+
+    this.database.deleteUserItemInGlobalList(itemId)
       .subscribe()
 
     this.showUserItems();

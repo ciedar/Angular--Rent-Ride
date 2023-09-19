@@ -160,6 +160,21 @@ export class DatabaseService {
     return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`)
   }
 
+  deleteUserItemInGlobalList(itemId: string) {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`)
+      .pipe(
+        map(data => {
+          return Object.entries(data).find(([id, value]) => value.projectId === itemId);
+        }),
+        take(1),
+        mergeMap(mapData => {
+          console.log(mapData);
+          // return mapData
+          return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/${mapData[0]}.json`)
+        })
+      )
+  }
+
 
   fetchGlobalUsersItemsList() {
     return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`).pipe(
