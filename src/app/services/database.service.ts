@@ -81,22 +81,6 @@ export class DatabaseService {
   }
 
 
-
-
-  // addItemToUserItemList(item: ItemModel) {
-  //   return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
-  //     .subscribe((userData) => {
-  //       const userArray = Object.entries(userData);
-  //       const user = userArray.find(([id, value]) => value.email === this.user.email);
-  //       if (user) {
-  //         const userId = user[0];
-  //         this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
-  //           .subscribe(() => {
-  //           });
-  //       }
-  //     });
-  // }
-
   addItemToUserItemList(item: ItemModel) {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
       .pipe(
@@ -149,15 +133,28 @@ export class DatabaseService {
       )
   }
 
+
   updateUserItemInGlobalList(itemId: string, itemName: string, itemDescription: string, itemPrice: number, imgUrl: [], owner: string) {
-    return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/${itemId}.json`, {
-      'imgUrl': imgUrl,
-      'itemDescription': itemDescription,
-      'name': itemName,
-      'price': itemPrice,
-      'owner': owner
-    })
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`).pipe(
+      map(data => {
+        return Object.entries(data).find(([id, value]) => value.projectId === itemId);
+      }),
+      take(1),
+      mergeMap(mapData => {
+        const id = mapData[0];
+        return this.httpClient.patch(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items/${id}.json`, {
+          'imgUrl': imgUrl,
+          'itemDescription': itemDescription,
+          'name': itemName,
+          'owner': owner,
+          'price': itemPrice,
+          'projectId': mapData[1].projectId
+        });
+
+      })
+    );
   }
+
 
   deleteUserItem(userId: string, itemId: string) {
     return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items/${itemId}.json`)

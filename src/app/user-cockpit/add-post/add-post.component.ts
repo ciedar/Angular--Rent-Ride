@@ -68,17 +68,6 @@ export class AddPostComponent implements OnInit {
         return this.databaseService.addItemToItemList(this.itemModel);
       })
     ).subscribe();
-    // this.databaseService.getUserId().pipe(
-    //   take(1),
-    //   mergeMap(data => {
-    //     console.log(data);
-    //     return this.databaseService.getItem(data)
-    //   }), map(responseData => {
-    //     console.log(responseData);
-    //   })
-    // ).subscribe(resData => {
-    //   console.log(resData);
-    // })
 
 
     for (let i = 0; i <= (<FormArray>this.addItemPost.get('imgUrl')).controls.length; i++) {

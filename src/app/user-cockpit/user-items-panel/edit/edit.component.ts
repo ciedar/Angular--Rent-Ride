@@ -74,17 +74,17 @@ export class EditComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     const imgUrl = data.value.imgUrl.map(img => { return img })
-    // this.database.getGlobalItemId().subscribe(data => console.log(data));
-
     if (imgUrl.length != 0) {
       this.database.updateUserItem(this.userId, this.item.key, data.value.name, data.value.itemDescription, imgUrl, data.value.price, this.user.email)
         .subscribe(data => {
+
         })
-      console.log(this.item.key)
+
       this.database.updateUserItemInGlobalList(this.item.key, data.value.name, data.value.itemDescription, data.value.price, imgUrl, this.user.email)
-        .subscribe()
+        .subscribe(data => {
+
+        })
     }
-    console.log(data.value)
 
   }
 
