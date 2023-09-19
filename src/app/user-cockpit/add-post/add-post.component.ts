@@ -16,7 +16,7 @@ export class AddPostComponent implements OnInit {
   itemModel: ItemModel;
   addItemPost: FormGroup;
   lastAddedItemId: string;
-  addItemSub: any
+  lastId: string;
   constructor(private databaseService: DatabaseService, private firebase: FirebaseService) {
 
   }
@@ -39,14 +39,12 @@ export class AddPostComponent implements OnInit {
       take(1),
       mergeMap(data => {
         if (!data) return null;
-        console.log('sieeee')
+        console.log(data);
         return this.databaseService.getItem(data)
       }),
       map(mapData => {
-        if (!mapData) return null;
-        console.log('sie')
+        console.log(mapData)
         const v = Object.values(mapData);
-        console.log(v[0]);
         return v[0]
       })
     )
@@ -62,16 +60,26 @@ export class AddPostComponent implements OnInit {
 
 
 
-    this.addItemSub = this.databaseService.addItemToUserItemList(this.itemModel)
-    if (this.addItemSub instanceof Subscription) {
-      console.log('sub')
-      this.takeIdItemAddedByUser().subscribe(resData => {
-        console.log(resData);
-        console.log('robi')
-        this.itemModel.projectId = resData[resData.length]
-        this.databaseService.addItemToItemList(this.itemModel).subscribe();
+    this.databaseService.addItemToUserItemList(this.itemModel).pipe(
+      take(1),
+      mergeMap(data => {
+        this.itemModel.projectId = data.name;
+        console.log(this.itemModel);
+        return this.databaseService.addItemToItemList(this.itemModel);
       })
-    }
+    ).subscribe();
+    // this.databaseService.getUserId().pipe(
+    //   take(1),
+    //   mergeMap(data => {
+    //     console.log(data);
+    //     return this.databaseService.getItem(data)
+    //   }), map(responseData => {
+    //     console.log(responseData);
+    //   })
+    // ).subscribe(resData => {
+    //   console.log(resData);
+    // })
+
 
     for (let i = 0; i <= (<FormArray>this.addItemPost.get('imgUrl')).controls.length; i++) {
       (<FormArray>this.addItemPost.get('imgUrl')).removeAt(i);

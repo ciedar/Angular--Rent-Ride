@@ -4,7 +4,7 @@ export class ItemModel {
     public imgUrl: string[]
     public price: number
     public owner: string
-    public projectId?: string[]
+    public projectId?: string
 
     constructor(name: string, itemDescription: string, imgUrl: string[], price: number, owner: string) {
         this.name = name;

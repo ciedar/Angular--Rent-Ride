@@ -3,7 +3,7 @@ import { FirebaseService } from './firebase.service';
 import { ItemModel } from '../models/items.model';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, mergeMap, switchMap, take, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +73,7 @@ export class DatabaseService {
         map(responseData => {
           const keys = Object.keys(responseData);
           const values = Object.values(responseData);
+          console.log(responseData);
           this.userItems.next({ key: keys, value: values });
           return { key: keys, value: values };
         })
@@ -82,22 +83,34 @@ export class DatabaseService {
 
 
 
+  // addItemToUserItemList(item: ItemModel) {
+  //   return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+  //     .subscribe((userData) => {
+  //       const userArray = Object.entries(userData);
+  //       const user = userArray.find(([id, value]) => value.email === this.user.email);
+  //       if (user) {
+  //         const userId = user[0];
+  //         this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
+  //           .subscribe(() => {
+  //           });
+  //       }
+  //     });
+  // }
+
   addItemToUserItemList(item: ItemModel) {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
-      .subscribe((userData) => {
-        const userArray = Object.entries(userData);
-        const user = userArray.find(([id, value]) => value.email === this.user.email);
-        if (user) {
-          const userId = user[0];
-          console.log('działam')
-          this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
-            .subscribe(() => {
-              console.log('działam')
-            });
-        }
-      });
+      .pipe(
+        map(data => {
+          const userArray = Object.entries(data);
+          return userArray.find(([id, value]) => value.email === this.user.email)
+        }),
+        take(1),
+        mergeMap((userData) => {
+          const userId = userData[0];
+          return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/items.json`, item)
+        })
+      )
   }
-
   addItemToItemList(item: ItemModel) {
     return this.httpClient.post<ItemModel>(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/items.json`, item);
   }
