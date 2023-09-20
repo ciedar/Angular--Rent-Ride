@@ -12,6 +12,7 @@ import { EditPasswordComponent } from "./user-cockpit/edit-password/edit-passwor
 import { ShowUserItemsComponent } from "./user-cockpit/user-items-panel/show-user-items/show-user-items.component";
 import { UserItemsPanelComponent } from "./user-cockpit/user-items-panel/user-items-panel.component";
 import { EditComponent } from "./user-cockpit/user-items-panel/edit/edit.component";
+import { ShowUserFavouriteComponent } from "./user-cockpit/show-user-favourite/show-user-favourite.component";
 
 
 
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
                     { path: '', component: ShowUserItemsComponent },
                     { path: 'edit/:index', component: EditComponent }
                 ]
-            }
+            },
+            { path: 'user-favourite-panel', component: ShowUserFavouriteComponent }
         ]
     }
 ]

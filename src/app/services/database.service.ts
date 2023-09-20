@@ -189,4 +189,18 @@ export class DatabaseService {
       })
     )
   }
+
+
+  addToFavouriteUserList(data) {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json`)
+      .pipe(
+        map(data => {
+          const userInfo = Object.entries(data).find(([id, value]) => value.email === this.user.email)
+          return userInfo[0];
+        }),
+        mergeMap(mapData => {
+          return this.httpClient.post(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${mapData}/favourite.json`, data)
+        })
+      )
+  }
 }

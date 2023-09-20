@@ -32,6 +32,7 @@ export class SearchItemComponent implements OnInit {
         if (data) {
           this.itemId = data.id[this.id]
           this.itemData = data.value[this.id]
+          console.log(this.itemId)
           console.log(this.itemData)
           this.database.getOwnerOfItem(this.itemId).subscribe(data => {
             this.sellerData = data;
@@ -40,5 +41,12 @@ export class SearchItemComponent implements OnInit {
         }
       })
     }
+  }
+
+
+  addToFavourite() {
+    this.database.addToFavouriteUserList(this.itemData).subscribe(data => {
+      console.log(data);
+    })
   }
 }

@@ -1,6 +1,4 @@
 <div *ngIf="userId">
-    <!-- <div *ngIf="error.length > 2" class="container-fluid col-12 mt-5"> -->
-    {{error}}
     <div class="container-fluid col-12 mt-5" *ngFor="let item of userItems; let i = index">
         <a class="d-flex col-8" style="cursor: pointer;">
             <div *ngFor="let img of item.imgUrl; let c = index">
@@ -18,5 +16,4 @@
         <button class="btn btn-primary" type="button" (click)="editItem(i)">Edytuj</button>
         <button class="btn btn-primary" type="button" (click)="deleteItem(i)">Usuń</button>
     </div>
-    <!-- </div> -->
 </div>
