@@ -211,9 +211,13 @@ export class DatabaseService {
         return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${data}/favourite.json`)
       }),
       map(responseData => {
-        const value = Object.values(responseData);
-        const val = Object.values(value);
-        return val;
+        if (responseData) {
+          const value = Object.values(responseData);
+          const val = Object.values(value);
+          return val;
+        } else {
+          return null
+        }
       })
     )
   }
@@ -228,8 +232,12 @@ export class DatabaseService {
       }),
       take(1),
       mergeMap(resData => {
-        const idArr = Object.keys(resData);
-        return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${this.userId.value}/favourite/${idArr[index]}.json`)
+        if (resData) {
+          const idArr = Object.keys(resData);
+          return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${this.userId.value}/favourite/${idArr[index]}.json`)
+        } else {
+          return null;
+        }
       })
     )
   }

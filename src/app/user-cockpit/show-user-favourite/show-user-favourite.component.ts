@@ -12,6 +12,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class ShowUserFavouriteComponent implements OnInit {
   data: any
   userId: string;
+  msg: string
   constructor(private database: DatabaseService, private httpClient: HttpClient) {
 
   }
@@ -29,13 +30,18 @@ export class ShowUserFavouriteComponent implements OnInit {
     this.database.deleteFromUserFavouriteList(index)
       .subscribe(() => {
         this.showFavouriteItems();
+
+        if (this.data.length === 0) {
+          this.showFavouriteItems()
+        }
       });
   }
 
 
   showFavouriteItems() {
     this.database.fetchFavouriteUserList().subscribe(data => {
+      console.log(data)
       this.data = data;
-    });
+    })
   }
 }

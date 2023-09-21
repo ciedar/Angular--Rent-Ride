@@ -13,7 +13,6 @@ export class ItemsService implements OnInit {
   constructor(private database: DatabaseService) {
     this.database.fetchGlobalUsersItemsList().subscribe(data => {
       if (data) {
-        // console.log(data)
         this.list = data;
         return this.globalUsersItemsList.next(data);
       } else {

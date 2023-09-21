@@ -32,10 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.itemService.globalUsersItemsList.subscribe(data => {
       if (data != null) {
-        console.log(data);
-        // this.itemsData = {}
         this.itemsData = data['value'];
-        console.log(this.itemsData);
       }
     }, error => {
       this.error = !this.error;
