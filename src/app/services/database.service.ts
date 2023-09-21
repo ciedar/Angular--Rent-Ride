@@ -219,12 +219,17 @@ export class DatabaseService {
   }
 
 
-  deleteFromUserFavouriteList() {
+  deleteFromUserFavouriteList(index: number) {
     return this.getUserId().pipe(
       take(1),
       mergeMap(data => {
         this.userId.next(data);
         return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${data}/favourite.json`)
+      }),
+      take(1),
+      mergeMap(resData => {
+        const idArr = Object.keys(resData);
+        return this.httpClient.delete(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${this.userId.value}/favourite/${idArr[index]}.json`)
       })
     )
   }
