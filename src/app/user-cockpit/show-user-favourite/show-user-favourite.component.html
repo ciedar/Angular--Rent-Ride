@@ -1,1 +1,19 @@
-<p>show-user-favourite works!</p>
+<div class="container mt-5">
+    <div *ngFor="let item of data; let i = index" class="mt-4 bg-light">
+        <a class="row item-link mt-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-12">
+                <div *ngFor="let itemUrl of item.imgUrl" class="text-center">
+                    <img [src]="itemUrl.img" alt="Product Image" class="product-image img-fluid" style="height: 150px;">
+                </div>
+            </div>
+            <div class="col-lg-10 col-md-6 col-sm-8 col-12">
+                <div class="item-description">
+                    <p>{{item.name}}</p>
+                    <p>{{item.itemDescription}}</p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quis veritatis aut vitae aspernatur
+                    ab laborum officiis, facere optio quia!
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

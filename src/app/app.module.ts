@@ -20,6 +20,7 @@ import { EditPasswordComponent } from './user-cockpit/edit-password/edit-passwor
 import { UserItemsPanelComponent } from './user-cockpit/user-items-panel/user-items-panel.component';
 import { EditComponent } from './user-cockpit/user-items-panel/edit/edit.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ShowUserFavouriteComponent } from './user-cockpit/show-user-favourite/show-user-favourite.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     ShowUserItemsComponent,
     EditPasswordComponent,
     UserItemsPanelComponent,
-    EditComponent
+    EditComponent,
+    ShowUserFavouriteComponent
   ],
   imports: [
     BrowserModule,
