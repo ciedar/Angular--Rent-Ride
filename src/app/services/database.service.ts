@@ -214,14 +214,18 @@ export class DatabaseService {
         const value = Object.values(responseData);
         const val = Object.values(value);
         return val;
-        // return val.map(item => {
-        // return new ItemModel(item.name, item.itemDescription, item.imgUrl, item.price, item.owner)
-        // })
-        // console.log(val.map(data => { console.log(data.name) }))
-        // console.log(value.map(data => { console.log(data) }))
-        // return new ItemModel(respons)
       })
     )
+  }
 
+
+  deleteFromUserFavouriteList() {
+    return this.getUserId().pipe(
+      take(1),
+      mergeMap(data => {
+        this.userId.next(data);
+        return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${data}/favourite.json`)
+      })
+    )
   }
 }
