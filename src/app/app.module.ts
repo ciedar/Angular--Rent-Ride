@@ -23,6 +23,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ShowUserFavouriteComponent } from './user-cockpit/user-favourite-panel/show-user-favourite/show-user-favourite.component';
 import { UserFavouritePanelComponent } from './user-cockpit/user-favourite-panel/user-favourite-panel.component';
 import { FavouriteItemComponent } from './user-cockpit/user-favourite-panel/favourite-item/favourite-item.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 
@@ -45,7 +46,8 @@ import { FavouriteItemComponent } from './user-cockpit/user-favourite-panel/favo
     EditComponent,
     UserFavouritePanelComponent,
     FavouriteItemComponent,
-    ShowUserFavouriteComponent
+    ShowUserFavouriteComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,

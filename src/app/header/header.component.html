@@ -6,9 +6,16 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div #hamburger class="collapse navbar-collapse" id="navbarContent">
+
             <form class="d-flex mx-auto col-lg-5">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-dark" type="button" (click)="navigateToSearchList()">Search</button>
+                <div class="input-group">
+                    <select class="form-select" #value>
+                        <option value="items">Przedmioty</option>
+                        <option value="users">Użytkownicy</option>
+                    </select>
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-dark" type="button" (click)="navigateToSearchList()">Search</button>
+                </div>
             </form>
             <div class="ml-lg-auto text-center">
                 <button *ngIf="!isLogged" type="button" class="btn btn-outline-primary"

@@ -15,6 +15,7 @@ import { EditComponent } from "./user-cockpit/user-items-panel/edit/edit.compone
 import { ShowUserFavouriteComponent } from "./user-cockpit/user-favourite-panel/show-user-favourite/show-user-favourite.component";
 import { UserFavouritePanelComponent } from "./user-cockpit/user-favourite-panel/user-favourite-panel.component";
 import { FavouriteItemComponent } from "./user-cockpit/user-favourite-panel/favourite-item/favourite-item.component";
+import { UsersListComponent } from "./users-list/users-list.component";
 
 
 
@@ -27,10 +28,10 @@ const appRoutes: Routes = [
             { path: ':id', component: SearchItemComponent }
         ]
     },
+    { path: 'users-list', component: UsersListComponent },
     {
         path: 'user-panel', component: UserCockpitComponent, children: [
             { path: 'add', component: AddPostComponent },
-            // { path: 'messages', component: MessagesComponent },
             { path: 'password-edit', component: EditPasswordComponent },
             {
                 path: 'user-items-panel', component: UserItemsPanelComponent, children: [

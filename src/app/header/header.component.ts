@@ -10,8 +10,10 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('hamburger', { static: false }) hmburgerButton: ElementRef<HTMLElement>
+  @ViewChild('value', { static: false }) valueOption: ElementRef<any>
   isLogged: boolean = false;
   user: User
+  searchValue: string;
 
   constructor(private router: Router, private firebase: FirebaseService) { }
 
@@ -30,7 +32,14 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToSearchList() {
-    this.router.navigate(['/search']);
+    const value = this.valueOption.nativeElement.value
+    if (value === 'items') {
+      this.router.navigate(['/search']);
+    }
+
+    if (value === 'users') {
+      this.router.navigate(['/users-list']);
+    }
   }
   logout() {
     this.isLogged = !this.isLogged;
