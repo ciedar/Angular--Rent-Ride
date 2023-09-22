@@ -1,0 +1,27 @@
+<div *ngIf="favItem">
+    <div class="container row bg-white mt-5">
+        <div class="col-8 row">
+            <div class="col-12 bg-light text-center mb-3">
+                <img [src]="favItem.imgUrl[0].img" alt="Obraz przedmiotu" class="img-fluid">
+            </div>
+            <div class="col-12 bg-light">
+                <label for="descirpiton">Opis:</label>
+                <h2>{{favItem.name}}</h2>
+                <p>{{favItem.itemDescription}}</p>
+                <h4>{{favItem.price}}zł</h4>
+            </div>
+        </div>
+        <div class="col-4 bg-white row text-center d-flex flex-column">
+            <div class="col-12 bg-light img-fluid mb-3 p-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="Ikona" style="width: 100px;">
+            </div>
+            <div class="col-12 bg-light mb-3 p-3">
+                <label for="">Sprzedawca</label>
+                <p>{{favItem.owner}}</p>
+            </div>
+            <div class="col-12 bg-light p-2 ">
+                <button class="btn btn-outline-success btn-lg">Zapytaj</button>
+            </div>
+        </div>
+    </div>
+</div>
