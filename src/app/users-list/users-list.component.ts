@@ -21,6 +21,9 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.database.
+    this.database.getUserList().subscribe(data => {
+      this.usersList = data;
+      console.log(this.usersList);
+    })
   }
 }

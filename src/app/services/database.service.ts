@@ -27,7 +27,7 @@ export class DatabaseService {
       .pipe(
         map(data => {
           if (data) {
-            return Object.values(data).map(responseData => responseData.username);
+            return Object.values(data).map(responseData => responseData);
           } else {
             return [];
           }
