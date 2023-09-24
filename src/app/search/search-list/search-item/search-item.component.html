@@ -20,8 +20,9 @@
                 <p>{{sellerData.owner}}</p>
             </div>
             <div class="col-12 bg-light p-2 ">
-                <button class="btn btn-outline-success btn-lg">Zapytaj</button>
-                <button class="btn btn-outline-success btn-lg" (click)="addToFavourite()">Dodaj do ulubionych</button>
+                <button [disabled]="!user" class="btn btn-outline-success btn-lg">Zapytaj</button>
+                <button [disabled]="!user" class="btn btn-outline-success btn-lg" (click)="addToFavourite()">Dodaj do
+                    ulubionych</button>
             </div>
         </div>
     </div>

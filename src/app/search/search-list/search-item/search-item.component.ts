@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
@@ -14,13 +15,18 @@ export class SearchItemComponent implements OnInit {
   itemData: any
   itemId: string[]
   sellerData: any;
+  user: any
   constructor(private route: ActivatedRoute,
     private itemsService: ItemsService,
-    private database: DatabaseService) {
+    private database: DatabaseService,
+    private firebase: FirebaseService) {
 
   }
 
   ngOnInit(): void {
+    this.firebase.user.subscribe(data => {
+      this.user = data;
+    })
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
     })
