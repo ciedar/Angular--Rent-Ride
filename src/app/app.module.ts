@@ -26,6 +26,9 @@ import { FavouriteItemComponent } from './user-cockpit/user-favourite-panel/favo
 import { UsersListPanelComponent } from './users-list-panel/users-list-panel.component';
 import { UsersListComponent } from './users-list-panel/users-list/users-list.component';
 import { UserProfileComponent } from './users-list-panel/users-list/user-profile/user-profile.component';
+import { MessagesComponent } from './user-cockpit/messages/messages.component';
+import { MessagesListComponent } from './user-cockpit/messages/messages-list/messages-list.component';
+
 
 
 
@@ -52,7 +55,10 @@ import { UserProfileComponent } from './users-list-panel/users-list/user-profile
     ShowUserFavouriteComponent,
     UsersListPanelComponent,
     UsersListComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    MessagesComponent,
+    MessagesListComponent,
+
 
   ],
   imports: [

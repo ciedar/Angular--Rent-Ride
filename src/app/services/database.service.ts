@@ -16,11 +16,65 @@ export class DatabaseService {
   userPassword = new BehaviorSubject<any>(null);
   userItems = new BehaviorSubject<any>(null);
   existedUsernames = new BehaviorSubject<any>(null);
+  msglist = new BehaviorSubject<string[]>(null);
   constructor(private firebase: FirebaseService, private httpClient: HttpClient) {
     this.firebase.user.subscribe((data: User) => {
       this.user = data;
     })
   }
+
+  sendMessage(username: string, message: string) {
+    return this.httpClient.get<any[]>('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json').pipe(
+      switchMap(userData => {
+        const user = Object.entries(userData).find(([id, value]) => value.email === this.user.email);
+        const recipient = Object.entries(userData).find(([id, value]) => value.username === username);
+
+        if (!recipient) {
+          return throwError('Recipient not found');
+        }
+
+        const recipientId = recipient[0];
+
+        const messageData = {
+          text: message,
+          from: user[1].username,
+          timestamp: Date.now()
+        };
+
+        return this.httpClient.post(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${recipientId}/messages.json`, messageData);
+      }),
+      catchError(error => {
+        console.error('Error sending message:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+
+  fetchUserMessageList() {
+    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+      .pipe(
+        switchMap(data => {
+          const info = Object.entries(data).find(([id, value]) => value.email === this.user.email)
+          return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${info[0]}/messages.json`)
+        }),
+        tap(resData => {
+          const userMessageList = [];
+          Object.values(resData).map(data => {
+
+            if (userMessageList.includes(data.from)) {
+              return null
+            } else {
+              userMessageList.push(data.from)
+            }
+            console.log(userMessageList)
+            this.msglist.next(userMessageList);
+          })
+        })
+      )
+  }
+
 
   getUserList() {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
@@ -241,4 +295,7 @@ export class DatabaseService {
       })
     )
   }
+
+
+
 }

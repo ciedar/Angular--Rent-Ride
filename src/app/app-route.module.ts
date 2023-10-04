@@ -18,6 +18,8 @@ import { FavouriteItemComponent } from "./user-cockpit/user-favourite-panel/favo
 import { UsersListPanelComponent } from "./users-list-panel/users-list-panel.component";
 import { UsersListComponent } from "./users-list-panel/users-list/users-list.component";
 import { UserProfileComponent } from "./users-list-panel/users-list/user-profile/user-profile.component";
+import { MessagesListComponent } from "./user-cockpit/messages/messages-list/messages-list.component";
+import { NewMessageComponent } from "./user-cockpit/messages/new-message/new-message.component";
 
 
 
@@ -39,6 +41,12 @@ const appRoutes: Routes = [
     },
     {
         path: 'user-panel', component: UserCockpitComponent, children: [
+            {
+                path: 'messages', component: MessagesComponent, children: [
+                    { path: '', component: MessagesListComponent },
+                    { path: 'new-message', component: NewMessageComponent }
+                ]
+            },
             { path: 'add', component: AddPostComponent },
             { path: 'password-edit', component: EditPasswordComponent },
             {
