@@ -23,6 +23,7 @@ export class NewMessageComponent implements OnInit {
     const message = data.value['text']
     console.log(username, message)
     this.database.sendMessage(username, message).subscribe(data => console.log(data));
+    this.database.sendMyMessage(username, message).subscribe(data => console.log(data));
   }
 
 }
