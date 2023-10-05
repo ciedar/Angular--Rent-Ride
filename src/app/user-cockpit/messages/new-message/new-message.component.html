@@ -1,16 +1,15 @@
 <div class="container-fluid pt-5">
-    <form class="col-6">
+    <form class="col-6" [formGroup]="sendMessageForm" (ngSubmit)="sendMessage(sendMessageForm)">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" id="username" class="form-control" placeholder="użytkownik">
+            <input type="text" id="username" class="form-control" placeholder="użytkownik" formControlName="do">
         </div>
 
         <div class="mb-3">
             <label for="message" class="form-label">Message</label>
-            <textarea id="message" class="form-control" rows="2"></textarea>
+            <textarea id="message" class="form-control" rows="2" formControlName="text"></textarea>
         </div>
 
-        <button type="button" class="btn btn-primary"
-            (click)="sendMessage('jarek12', 'halo halo tu darek')">Wyślij</button>
+        <button type="submit" class="btn btn-primary">Wyślij</button>
     </form>
 </div>

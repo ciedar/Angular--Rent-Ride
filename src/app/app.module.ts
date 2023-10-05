@@ -28,6 +28,7 @@ import { UsersListComponent } from './users-list-panel/users-list/users-list.com
 import { UserProfileComponent } from './users-list-panel/users-list/user-profile/user-profile.component';
 import { MessagesComponent } from './user-cockpit/messages/messages.component';
 import { MessagesListComponent } from './user-cockpit/messages/messages-list/messages-list.component';
+import { NewMessageComponent } from './user-cockpit/messages/new-message/new-message.component';
 
 
 
@@ -58,6 +59,7 @@ import { MessagesListComponent } from './user-cockpit/messages/messages-list/mes
     UserProfileComponent,
     MessagesComponent,
     MessagesListComponent,
+    NewMessageComponent
 
 
   ],

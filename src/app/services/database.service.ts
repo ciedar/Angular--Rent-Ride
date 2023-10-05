@@ -3,7 +3,7 @@ import { FirebaseService } from './firebase.service';
 import { ItemModel } from '../models/items.model';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { BehaviorSubject, catchError, map, mergeMap, switchMap, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, mergeMap, of, switchMap, take, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,6 @@ export class DatabaseService {
   userPassword = new BehaviorSubject<any>(null);
   userItems = new BehaviorSubject<any>(null);
   existedUsernames = new BehaviorSubject<any>(null);
-  msglist = new BehaviorSubject<string[]>(null);
   constructor(private firebase: FirebaseService, private httpClient: HttpClient) {
     this.firebase.user.subscribe((data: User) => {
       this.user = data;
@@ -38,6 +37,7 @@ export class DatabaseService {
         const messageData = {
           text: message,
           from: user[1].username,
+          type: 'recived',
           timestamp: Date.now()
         };
 
@@ -51,30 +51,30 @@ export class DatabaseService {
   }
 
 
-
   fetchUserMessageList() {
-    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
-      .pipe(
-        switchMap(data => {
-          const info = Object.entries(data).find(([id, value]) => value.email === this.user.email)
-          return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${info[0]}/messages.json`)
-        }),
-        tap(resData => {
-          const userMessageList = [];
-          Object.values(resData).map(data => {
-
-            if (userMessageList.includes(data.from)) {
-              return null
-            } else {
-              userMessageList.push(data.from)
-            }
-            console.log(userMessageList)
-            this.msglist.next(userMessageList);
-          })
-        })
-      )
+    return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json').pipe(
+      switchMap(data => {
+        const info = Object.entries(data).find(([id, value]) => value.email === this.user.email);
+        if (!info) {
+          return throwError('Nie znaleziono informacji o użytkowniku.');
+        }
+        return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${info[0]}/messages.json`);
+      }),
+      map(resData => {
+        const userMessageList = [];
+        Object.values(resData).forEach(data => {
+          if (!userMessageList.includes(data.from)) {
+            userMessageList.push(data.from);
+          }
+        });
+        return userMessageList;
+      }),
+      catchError(error => {
+        console.error('Błąd w pobieraniu listy wiadomości użytkownika:', error);
+        return of([]);
+      })
+    );
   }
-
 
   getUserList() {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json')
