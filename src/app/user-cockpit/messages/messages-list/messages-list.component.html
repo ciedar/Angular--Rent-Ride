@@ -1,7 +1,16 @@
-<!-- <div *ngIf="!messageUserList"> -->
-
-<div *ngFor="let name of messageUserList">
-    <p>{{name}}</p>
-</div>
-<!-- </div> -->
-<button class="btn btn-primary" routerLink="new-message">Utwórz nowy czat</button>
+<div class="col-md-8">
+    <div class="card">
+        <div class="card-header">
+            Kontakty
+        </div>
+        <div class="card-body">
+            <ul class="list-group" *ngFor="let name of messageUserList">
+                <li class="list-group-item">
+                    <a [routerLink]="[name]">
+                        {{name}}
+                    </a>
+                </li>
+            </ul>
+            <button class="btn btn-primary" routerLink="new-message">Utwórz nowy czat</button>
+        </div>
+    </div>

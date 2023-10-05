@@ -22,6 +22,19 @@ export class DatabaseService {
     })
   }
 
+  getMessage() {
+    return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json`)
+      .pipe(
+        switchMap(userData => {
+          const my = Object.entries(userData).find(([id, data]) => data.email === this.user.email)
+          return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users/${my[0]}/messages.json`)
+        }),
+        map(msg => {
+          console.log(msg)
+        })
+      )
+  }
+
   sendMyMessage(username: string, message: string) {
     return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json`)
       .pipe(

@@ -20,6 +20,7 @@ import { UsersListComponent } from "./users-list-panel/users-list/users-list.com
 import { UserProfileComponent } from "./users-list-panel/users-list/user-profile/user-profile.component";
 import { MessagesListComponent } from "./user-cockpit/messages/messages-list/messages-list.component";
 import { NewMessageComponent } from "./user-cockpit/messages/new-message/new-message.component";
+import { DirectChatComponent } from "./user-cockpit/messages/direct-chat/direct-chat.component";
 
 
 
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
             {
                 path: 'messages', component: MessagesComponent, children: [
                     { path: '', component: MessagesListComponent },
-                    { path: 'new-message', component: NewMessageComponent }
+                    { path: 'new-message', component: NewMessageComponent },
+                    { path: ':name', component: DirectChatComponent }
                 ]
             },
             { path: 'add', component: AddPostComponent },
