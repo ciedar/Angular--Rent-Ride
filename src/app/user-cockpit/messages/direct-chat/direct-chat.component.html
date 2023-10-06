@@ -1,16 +1,15 @@
-<div class="col-md-8">
-
+<div class="col-md-8" *ngIf="test">
     <div class="card">
         <div class="card-header">
-            Konwersacja z Kontakt 1
+            Czat z :{{ test[0]?.from }}
         </div>
         <div class="card-body">
-            <div class="message">
-                <div class="message-received">
-                    <p>Kontakt 1: Witaj!</p>
+            <div class="message" *ngFor="let msg of test">
+                <div class="message-received" *ngIf="msg.type === 'recived'">
+                    <p>{{ msg.from }}: {{ msg.text }}</p>
                 </div>
-                <div class="message-sent">
-                    <p>Ty: Cześć! Jak się masz?</p>
+                <div class="message-sent" *ngIf="msg.type === 'sent'">
+                    <p>Ty: {{ msg.text }}</p>
                 </div>
             </div>
         </div>
@@ -23,3 +22,4 @@
             </div>
         </div>
     </div>
+</div>
