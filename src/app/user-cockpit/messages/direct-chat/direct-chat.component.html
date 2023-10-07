@@ -5,10 +5,10 @@
         </div>
         <div class="card-body">
             <div class="message" *ngFor="let msg of test">
-                <div class="message-received" *ngIf="msg.type === 'recived'">
+                <div class="message-received" *ngIf="msg?.type === 'recived'">
                     <p>{{ msg.from }}: {{ msg.text }}</p>
                 </div>
-                <div class="message-sent" *ngIf="msg.type === 'sent'">
+                <div class="message-sent" *ngIf="msg?.type === 'sent'">
                     <p>Ty: {{ msg.text }}</p>
                 </div>
             </div>

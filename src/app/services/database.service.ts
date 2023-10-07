@@ -107,8 +107,9 @@ export class DatabaseService {
       map(resData => {
         const userMessageList = [];
         Object.values(resData).forEach(data => {
-          if (!userMessageList.includes(data.from)) {
+          if (!userMessageList.includes(data.from) || !userMessageList.includes(data.to)) {
             userMessageList.push(data.from);
+            userMessageList.push(data.to);
           }
         });
         return userMessageList;
