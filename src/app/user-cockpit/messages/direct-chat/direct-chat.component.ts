@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 
@@ -8,9 +8,9 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./direct-chat.component.css']
 })
 export class DirectChatComponent implements OnInit {
+  @ViewChild('message', { static: false }) messageInput: ElementRef<HTMLInputElement>
   test: any;
   user: string
-  arr: any;
   constructor(private database: DatabaseService, private route: ActivatedRoute) {
 
   }
@@ -22,10 +22,17 @@ export class DirectChatComponent implements OnInit {
     })
     this.database.getMessage(this.user).subscribe(data => {
       this.test = data;
-      console.log(this.test)
-      data.forEach(type => {
+    });
+  }
 
-      })
+  sendMsg() {
+    const msg = this.messageInput.nativeElement.value
+    const deliverTo = this.user
+    this.database.sendMyMessage(deliverTo, msg).subscribe()
+    this.database.sendMessage(deliverTo, msg).subscribe()
+    this.messageInput.nativeElement.value = '';
+    this.database.getMessage(this.user).subscribe(data => {
+      this.test = data;
     });
   }
 }

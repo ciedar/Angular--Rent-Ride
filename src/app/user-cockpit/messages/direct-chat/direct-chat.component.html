@@ -1,4 +1,4 @@
-<div class="col-md-8" *ngIf="test">
+<div class="col-md-8 mt-5" *ngIf="test">
     <div class="card">
         <div class="card-header">
             Czat z :{{ test[0]?.from }}
@@ -15,9 +15,9 @@
         </div>
         <div class="card-footer">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Napisz wiadomość...">
+                <input type="text" class="form-control" placeholder="Napisz wiadomość..." #message>
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Wyślij</button>
+                    <button class="btn btn-primary" type="button" (click)="sendMsg()">Wyślij</button>
                 </div>
             </div>
         </div>
