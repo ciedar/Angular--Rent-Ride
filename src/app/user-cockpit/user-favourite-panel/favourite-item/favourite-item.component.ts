@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class FavouriteItemComponent implements OnInit {
   id: number;
   favouriteArr: any[];
   favItem: any;
-  constructor(private database: DatabaseService, private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(private database: DatabaseService, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -29,5 +29,10 @@ export class FavouriteItemComponent implements OnInit {
           console.log(this.favItem)
         })
     }
+  }
+
+  sendDirectMsg(email: string) {
+    const userEmail = email;
+    this.router.navigate(['user-panel/messages/new-message'], { queryParams: { email: userEmail } });
   }
 }

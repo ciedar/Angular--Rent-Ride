@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ItemsService } from 'src/app/services/items.service';
@@ -19,7 +19,8 @@ export class SearchItemComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private itemsService: ItemsService,
     private database: DatabaseService,
-    private firebase: FirebaseService) {
+    private firebase: FirebaseService,
+    private router: Router) {
 
   }
 
@@ -38,21 +39,20 @@ export class SearchItemComponent implements OnInit {
         if (data) {
           this.itemId = data.id[this.id]
           this.itemData = data.value[this.id]
-          console.log(this.itemId)
-          console.log(this.itemData)
           this.database.getOwnerOfItem(this.itemId).subscribe(data => {
             this.sellerData = data;
-            console.log(this.sellerData)
           })
         }
       })
     }
   }
-  // sasa
 
   addToFavourite() {
     this.database.addToFavouriteUserList(this.itemData).subscribe(data => {
-      console.log(data);
     })
+  }
+  sendDirectMsg(email: string) {
+    const userEmail = email;
+    this.router.navigate(['user-panel/messages/new-message'], { queryParams: { email: userEmail } });
   }
 }

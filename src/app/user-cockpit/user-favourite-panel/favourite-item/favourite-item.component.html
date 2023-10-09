@@ -20,7 +20,7 @@
                 <p>{{favItem.owner}}</p>
             </div>
             <div class="col-12 bg-light p-2 ">
-                <button class="btn btn-outline-success btn-lg">Zapytaj</button>
+                <button class="btn btn-outline-success btn-lg" (click)="sendDirectMsg(favItem.owner)">Zapytaj</button>
             </div>
         </div>
     </div>

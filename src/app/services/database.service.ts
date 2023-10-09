@@ -42,13 +42,13 @@ export class DatabaseService {
       )
   }
 
-  sendMyMessage(username: string, message: string) {
+  sendMyMessage(email: string, message: string) {
     return this.httpClient.get(`https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json`)
       .pipe(
         switchMap(userData => {
           const user = Object.entries(userData).find(([id, value]) => value.email === this.user.email);
-          const recipient = Object.entries(userData).find(([id, value]) => value.username === username);
-
+          const recipient = Object.entries(userData).find(([id, value]) => value.email === email);
+          console.log(recipient[1].email)
           if (!user) {
             return throwError('something went wrong')
           }
@@ -56,7 +56,7 @@ export class DatabaseService {
 
           const myMessage = {
             text: message,
-            to: recipient[1].username,
+            to: recipient[1].email,
             type: 'sent',
             timestamp: Date.now()
           }
@@ -66,11 +66,11 @@ export class DatabaseService {
       )
   }
 
-  sendMessage(username: string, message: string) {
+  sendMessage(email: string, message: string) {
     return this.httpClient.get<any[]>('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json').pipe(
       switchMap(userData => {
         const user = Object.entries(userData).find(([id, value]) => value.email === this.user.email);
-        const recipient = Object.entries(userData).find(([id, value]) => value.username === username);
+        const recipient = Object.entries(userData).find(([id, value]) => value.email === email);
 
         if (!recipient) {
           return throwError('Recipient not found');
@@ -80,7 +80,7 @@ export class DatabaseService {
 
         const messageData = {
           text: message,
-          from: user[1].username,
+          from: user[1].email,
           type: 'recived',
           timestamp: Date.now()
         };
@@ -99,6 +99,7 @@ export class DatabaseService {
     return this.httpClient.get('https://tablica-20451-default-rtdb.europe-west1.firebasedatabase.app/users.json').pipe(
       switchMap(data => {
         const info = Object.entries(data).find(([id, value]) => value.email === this.user.email);
+        console.log(info)
         if (!info) {
           return throwError('Nie znaleziono informacji o użytkowniku.');
         }

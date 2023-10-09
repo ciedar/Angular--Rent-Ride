@@ -1,9 +1,9 @@
 <div class="col-md-8 mt-5" *ngIf="test">
     <div class="card">
         <div class="card-header">
-            Czat z :{{ test[0]?.from }}
+            Czat z: {{ test[0]?.from }}
         </div>
-        <div class="card-body">
+        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
             <div class="message" *ngFor="let msg of test">
                 <div class="message-received" *ngIf="msg?.type === 'recived'">
                     <p>{{ msg.from }}: {{ msg.text }}</p>

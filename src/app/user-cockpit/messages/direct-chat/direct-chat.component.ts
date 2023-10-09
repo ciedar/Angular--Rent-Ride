@@ -28,6 +28,7 @@ export class DirectChatComponent implements OnInit {
   sendMsg() {
     const msg = this.messageInput.nativeElement.value
     const deliverTo = this.user
+    console.log(this.user)
     this.database.sendMyMessage(deliverTo, msg).subscribe()
     this.database.sendMessage(deliverTo, msg).subscribe()
     this.messageInput.nativeElement.value = '';

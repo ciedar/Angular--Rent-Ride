@@ -15,6 +15,7 @@ export class MessagesListComponent implements OnInit {
     this.database.fetchUserMessageList()
       .subscribe(data => {
         this.messageUserList = data;
+        console.log(data);
       })
   }
 }
